@@ -1,0 +1,116 @@
+.main-content {
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.hero-section {
+    height: 100vh;
+    background-color: #4E5B09;
+    width: 591px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-form {
+    margin: 0 auto;
+}
+.hero-header {
+  margin-top: 91px;
+  font-weight: 800;
+  font-size: 36px;
+  color: #fff;
+  text-align: center;
+}
+.hero-description {
+  margin-top: 18px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  width: 494px;
+}
+.hero-image {
+  width: 100%;
+  margin-top: 135px;
+}
+.form {
+  background-color: #fff;
+  padding: 49px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+.form-title {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 30px;
+}
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.input-field {
+  width: 400px;
+  padding: 10px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+}
+.input-field:focus{
+    outline: none;
+}
+.submit-button {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background-color: #4e5b09;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.role-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.role-option {
+  background-color: #eef1f8;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #334054;
+  font-weight: 600;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+select {
+    width: 420px;
+    padding: 10px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+}
+
+select:focus {
+    outline: none;
+}
+
+.eye {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    cursor: pointer;
+}
