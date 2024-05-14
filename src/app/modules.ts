@@ -3,10 +3,10 @@ import { SpinnerComponent } from "./components/spinner/spinner.component";
 
 @NgModule({
     declarations:[
-        SpinnerComponent
+        SpinnerComponent,
     ],
     exports:[
-        SpinnerComponent
+        SpinnerComponent,
     ]
 })
 export class CoreModule{}

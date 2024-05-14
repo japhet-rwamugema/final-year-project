@@ -1,0 +1,64 @@
+<div class="main-content">
+  <nav>
+    <img src="../../../assets/images/logo.svg" alt="" />
+  </nav>
+  <div class="main-div">
+    <aside>
+      <div class="avatar">
+        <img src="../../../assets/images/avatar.svg" alt="" />
+        <span>Technologist</span>
+      </div>
+      <button>
+        Logout <img src="../../../assets/images/logout.svg" alt="" />
+      </button>
+    </aside>
+    <div class="registration">
+      <h1>Appointment Confirmation</h1>
+      <div class="Radiology">
+        <div class="container">
+          <div class="info">
+            <strong>Patient Name:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <div class="info">
+            <strong>Appointment Date:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <div class="info">
+            <strong>Gender:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <div class="info">
+            <strong>Patient Name:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <div class="info">
+            <strong>Patient Name:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <div class="info">
+            <strong>Patient Name:</strong>
+            <strong>John Doe</strong>
+          </div>
+          <button>complete Image Aquisition</button>
+        </div>
+        <div class="Radiology-images">
+          <button class="Radiology-btn">Radiology</button>
+          <input
+            type="file"
+            class="custom-file-input"
+            id="fileInput"
+            (change)="onFileSelected($event)"
+          />
+          <label class="custom-file-label" for="fileInput">+ add image</label>
+          <div class="selectedImages">
+            @for (item of selectedImages; track $index) {
+            <img [src]="item" class="image" />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div></div>

@@ -1,0 +1,196 @@
+.main-content {
+  width: 100%;
+  height: 100vh;
+  background-color: #4e5b09;
+}
+nav {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+nav img {
+  margin-left: 20px;
+}
+.main-div {
+  display: flex;
+  background-color: #ddd;
+  align-items: center;
+  height: 950px;
+}
+
+aside {
+  width: 200px;
+  height: 950px;
+  background-color: #fcf7ea;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  position: fixed;
+}
+
+aside .avatar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+.avatar img {
+  width: 48px;
+  height: 38px;
+}
+.avatar span {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+aside button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  height: 27px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+.registration {
+  margin: 0 auto;
+  height: 100%;
+}
+
+.registration h1 {
+  margin: 10px 0;
+  text-align: center;
+}
+.container {
+  position: relative;
+  width: 900px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 25px auto 0 auto;
+  border-radius: 18px;
+  background-color: #fff;
+}
+.info {
+  width: 60%;
+  margin: 30px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  width: 280px;
+  height: 37px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  color: #fff;
+  background-color: #9cb02f;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.Radiology {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+}
+.Radiology-images {
+  display: flex;
+  flex-direction: column;
+  width: 362px;
+}
+.Radiology-btn {
+  background-color: #fcf7ea;
+  height: 78px;
+  color: #000;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.custom-file-input {
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-file-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 53px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #4e5b09;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.image {
+  width: 100%;
+  background-color: #4e5b09;
+  height: 178px;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+.selectedImages {
+  margin-top: 10px;
+  height: 300px;
+  overflow: auto;
+}
+
+.report {
+  margin: 0 auto;
+  width: 900px;
+  height: 428px;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.report-grp {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 40px 0 0 0;
+  justify-content: space-evenly;
+}
+
+.report-grp img {
+  width: 314px;
+}
+.report-grp p {
+  width: 471px;
+  font-size: 20px;
+  font-weight: bold;
+}
+h2 {
+  width: 361px;
+  height: 53px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -20px;
+  left: 30%;
+  background-color: #4e5b09;
+  z-index: 1;
+}
+.report-container {
+    position: relative;
+}

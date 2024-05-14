@@ -21,7 +21,7 @@ export class AuthService {
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
-    return this.http.get<currentUserResponse>(`${environment.BACKEND_URL}/users/register`,{
+    return this.http.get<currentUserResponse>(`${environment.BACKEND_URL}/auth/currentUser`,{
       headers: header
     })
   }
