@@ -1,1 +1,103 @@
-<p>admin-dashboard works!</p>
+<div class="main-content">
+  <nav>
+    <img src="../../../assets/images/logo.svg" alt="" />
+  </nav>
+  <div class="main-div">
+    <aside>
+        <div class="link">
+            <a routerLink="/dashboard/admin" routerLinkActive="active-class">Home</a>
+            <a routerLink="/dashboard/admin/users">Users</a>
+            <a routerLink="/dashboard/admin/roles">Roles</a>
+            <a routerLink="/dashboard/admin/analytics">Analytics</a>
+        </div>
+        <div class="profile">
+            <div class="avatar">
+                <img src="../../../assets/images/avatar.svg" alt="" />
+                <span>Admin</span>
+            </div>
+            <button>
+                Logout <img src="../../../assets/images/logout.svg" alt="" />
+            </button>
+        </div>
+    </aside>
+    <div class="container">
+      <div class="search-container">
+        <div class="card-container">
+            <div class="card">
+                <h4>Total number of Patients</h4>
+                <div class="card-bottom">
+                    <span>1022</span>
+                    <img src="../../../assets/images/patients.svg" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <h4>Total number of Tests</h4>
+                <div class="card-bottom">
+                    <span>1022</span>
+                    <img src="../../../assets/images/tests.svg" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <h4>Total number of Equipments</h4>
+                <div class="card-bottom">
+                    <span>1022</span>
+                    <img src="../../../assets/images/equip.svg" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <h4>Total number of Scheduled Appointments</h4>
+                <div class="card-bottom">
+                    <span>1022</span>
+                    <img src="../../../assets/images/appointments.svg" alt="">
+                </div>
+            </div>
+        </div>
+          <div class="search-actions">
+            <h1>Recent Activity</h1>
+            <img src="../../../assets/images/arrow.svg" alt="">
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>User</th>
+            <th>Test</th>
+            <th>Patient</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of tableData; track $index) {
+          <tr>
+            <td>{{ item.staffId }}</td>
+            <td>{{ item.user }}</td>
+            <td>{{ item.role }}</td>
+            <td>{{ item.status }}</td>
+            <td class="actions-container">
+              <div class="actions">
+                <img src="../../../assets/images/ellipsis.svg" alt="" />
+              </div>
+              <div class="dropdown">
+                <h3>Actions</h3>
+                <button class="dropdown-btn">
+                  <img src="../../../assets/images/edit-icon.svg" alt="" /><span
+                    >Edit</span
+                  >
+                </button>
+                <button class="dropdown-btn">
+                  <img
+                    src="../../../assets/images/delete-icon.svg"
+                    alt=""
+                  /><span>Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+        <button class="view-all-btn">View all</button>
+      </table>
+    </div>
+  </div>
+</div>

@@ -106,13 +106,13 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin: 25px 0;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
   border-radius: 8px;
 }
 
 table thead tr {
-  background-color: #FAFBFF;
+  background-color: #fafbff;
   color: #000;
   text-align: left;
   font-weight: bold;
@@ -124,7 +124,7 @@ table th {
 }
 
 table tbody tr {
-  border-bottom: 1px solid #E6E8F0;
+  border-bottom: 1px solid #e6e8f0;
 }
 
 table tbody td {
@@ -162,14 +162,30 @@ table tbody td {
   width: 195px;
   height: 40px;
   background-color: #9cb02f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
+  font-weight: bold;
   margin: 10px 0;
   position: relative;
   left: 1500px;
+  box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
+}
+.search-actions .new-role {
+  width: 195px;
+  height: 40px;
+  background-color: #9cb02f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
   box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
 }
 
@@ -237,51 +253,11 @@ span {
 }
 
 .search-container {
-  margin-top: 1rem;
   width: 100%;
-  height: 200px;
-  display: grid;
-}
-.card-container {
-  width: 100%;
-  height: 156px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.card-container .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-  width: 271px;
-  background: linear-gradient(45deg, #05609e 0%, #1c90b3 48%, #32bcc6);
-  border-radius: 8px;
-  padding: 5px;
-  box-sizing: border-box;
-}
-.card-container .card:nth-child(2) {
-  background: linear-gradient(45deg, #d81a60 0%, #d73581 48%, #d85fa8);
-}
-.card-container .card:nth-child(3) {
-  background: linear-gradient(45deg, #ff841a 0%, #f65252 100%);
-}
-.card-container .card:nth-child(4) {
-  background: linear-gradient(45deg, #625ba6 0%, #996dd2 100%);
-}
-.card h4 {
-  color: #fff;
-}
-.card-bottom {
-    margin-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.card-bottom span {
-  font-weight: bold;
-  font-size: 28px;
-  color: #fff;
 }
 .search-container h1 {
   font-size: 16px;
@@ -289,10 +265,123 @@ span {
 }
 
 .search-actions {
-  width: 100%;
+  width: 25%;
+  height: 40px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.search-actions img {
+.search-actions input[type="search"] {
+  width: 192px;
+  height: 40px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+}
+
+.search-actions input[type="search"]:focus {
+  outline: none;
+}
+
+.search-actions button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.create-role{
+    width: 475px;
+    height: 409px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    z-index: 10;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.create-role .close {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.create-role .close button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.create-role form {
+    margin-top: 1rem;
+    width: 100%;
+    height: 80%;
+    display: grid;
+}
+
+.create-role form .form-grp{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+}
+
+.form-grp label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+.form-grp span {
+    position: absolute;
+    padding:5px 10px;
+    border-radius: 8px;
+    background-color: #F9DADA;
+    right: 0;
+    color: #D14343;
+}
+form .form-grp input[type="text"], input:focus {
+    width: 443px;
+    height: 40px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #D8DAE5;
+    outline: none;
+
+}
+#desc {
+    height: 84px;
+}
+.form-grp input[type="checkbox"]{
+    margin-top: 15px;
+    height: 28px;
+    width: 36px;
+}
+
+form .btn {
+    display: flex;
+    justify-content: right;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn button:nth-child(1) {
+    margin-left: 20px;
+    background-color: transparent;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    color: #DD5928;
+    cursor: pointer;
+}
+.btn button {
+    width: 69px;
+    height: 40px;
+}
+.btn button:nth-child(2) {
+    margin-left: 20px;
+    background-color: #4E5B09;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
     cursor: pointer;
 }
