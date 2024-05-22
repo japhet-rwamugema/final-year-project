@@ -36,13 +36,9 @@
         />
         <img src="../../../assets/images/eye.svg" alt="" class="eye" (click)="togglePassword()" />
     </div>
-        <div class="input-group">
-            <select>
-                <option value="">select role</option>
-                <option value="">select role</option>
-                <option value="">select role</option>
-            </select>
-        </div>
+    @if (error) {
+      <span class="error">{{error}}</span>
+    }
         @if (!isLoading) {
             <button type="submit" class="submit-button" (click)="login()">Login</button>
         }

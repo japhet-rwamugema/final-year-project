@@ -8,6 +8,10 @@ nav {
   height: 80px;
   display: flex;
   align-items: center;
+  background-color: #4E5B09;
+  top: 0;
+  position: fixed;
+  z-index: 1000;
 }
 nav img {
   margin-left: 20px;
@@ -16,18 +20,22 @@ nav img {
   display: flex;
   background-color: #ddd;
   align-items: center;
-  height: 950px;
+  justify-content: center;
+  height: 100vh;
 }
 
 aside {
   width: 200px;
-  height: 950px;
+  height: 100vh;
   background-color: #fcf7ea;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
 }
 
 aside .avatar {
@@ -92,20 +100,26 @@ aside .link {
 }
 .container {
   width: 80%;
-  height: 950px;
-  position: relative;
+  height: 100%;
+  position: fixed;
   display: flex;
   flex-direction: column;
-  left: 4rem;
-  margin: 0 auto;
+  left: 15rem;
+  top: 3rem;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
+.container::-webkit-scrollbar{
+  display: none;
+}
 table {
   position: relative;
-  min-height: fit-content;
+  max-height: 450px;
   width: 100%;
   border-collapse: collapse;
-  margin: 25px 0;
+  margin: 15px 0;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #FFFFFF;
   border-radius: 8px;
@@ -130,6 +144,7 @@ table tbody tr {
 table tbody td {
   height: 64px;
   padding: 0 10px;
+  width: 200px;
   box-sizing: border-box;
 }
 
@@ -169,7 +184,6 @@ table tbody td {
   font-size: 16px;
   margin: 10px 0;
   position: relative;
-  left: 1500px;
   box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
 }
 
@@ -190,7 +204,7 @@ table tbody td {
   border-radius: 8px;
   z-index: 1;
   top: 20px;
-  right: 5px;
+  right: 10px;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -237,14 +251,15 @@ span {
 }
 
 .search-container {
-  margin-top: 1rem;
   width: 100%;
-  height: 200px;
-  display: grid;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
 }
 .card-container {
   width: 100%;
-  height: 156px;
+  height: 130px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -285,6 +300,7 @@ span {
 }
 .search-container h1 {
   font-size: 16px;
+  margin-top: 5px;
   font-weight: bold;
 }
 

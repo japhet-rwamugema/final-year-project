@@ -56,31 +56,35 @@ aside button {
   color: #000;
 }
 .registration {
-  margin: 0 auto;
+  margin: -70px auto 0 auto;
 }
 
 .registration h1 {
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
   margin-bottom: 10px;
 }
 .container {
   width: 1090px;
-  height: 712px;
+  height: fit-content;
   display: flex;
   justify-content: space-evenly;
   margin: 0 auto;
-  padding: 15px;
+  padding: 10px;
   border-radius: 18px;
   background-color: #fff;
   overflow: auto;
 }
+
 .input-group {
   margin-bottom: 10px;
   display: grid;
 }
 .input-field {
   width: 429px;
-  height: 34px;
-  margin-top: 10px;
+  height: 30px;
+  margin-top: 5px;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -97,6 +101,9 @@ aside button {
 
 .container button {
   width: 172px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 34px;
   border-radius: 8px;
   border: none;
@@ -108,6 +115,7 @@ aside button {
 }
 
 .btn {
+  margin-top: 10px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -127,4 +135,18 @@ select:focus {
 label {
   font-weight: 500;
   font-size: 12px;
+}
+
+option {
+  text-transform: capitalize;
+}
+
+.error {
+  color: red;
+  margin: 5px;
+  padding: 5px 10px;
+  width:fit-content;
+  border-radius: 4px;
+  background-color: rgb(244, 205, 205);
+  text-transform: capitalize;
 }

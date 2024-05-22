@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="insuranceForm">
+      <div class="form-field">
+        <label for="name">Image type Name</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Enter image name"
+        />
+      </div>
+      <div class="form-field">
+        <label for="totalCost">Total cost</label>
+        <input
+          id="totalCost"
+          type="number"
+          formControlName="totalCost"
+          placeholder="Enter cost"
+        />
+      </div>
+      @if ( !isLoading ) {
+      <button type="submit" (click)="onSubmit()">submit</button>
+      }@else {
+      <button type="submit"><app-spinner></app-spinner></button>
+      }
+    </form>
+  </div>
+</div>

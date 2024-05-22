@@ -75,10 +75,15 @@ aside button {
   background-color: #fff;
 }
 .info {
-  width: 90%;
+  width: 100%;
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+}
+
+strong {
+  width: 180px;
+  text-transform: capitalize;
 }
 
 button {

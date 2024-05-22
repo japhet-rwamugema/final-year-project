@@ -14,30 +14,33 @@
       </aside>
       <div class="registration">
           <h1>Appointment Confirmation</h1>
+
       <div class="container">
-        <div class="info">
-            <strong>Patient Name:</strong>
+        <!-- @if (appoinmentData) {
+          <div class="info">
+            <strong>{{appoinmentData.patientId}}</strong>
             <strong>John Doe</strong>
+          </div>
+        } -->
+        <div class="info">
+          <strong>Patient Name:</strong>
+          <strong>{{appoinmentData.data.patient.firstName}} {{appoinmentData.data.patient.lastName}}</strong>
         </div>
         <div class="info">
-            <strong>Appointment Date:</strong>
-            <strong>John Doe</strong>
+        <strong>Appointment Date:</strong>
+            <strong>{{appoinmentData.data.date}}</strong>
         </div>
         <div class="info">
-            <strong>Gender:</strong>
-            <strong>John Doe</strong>
+            <strong>Insurance company:</strong>
+            <strong>{{appoinmentData.data.insurance.name}}</strong>
         </div>
         <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>Insurance ID:</strong>
+            <strong>{{appoinmentData.data.insurance.id | trim}}</strong>
         </div>
         <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
-        </div>
-        <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>Refering Doctor:</strong>
+            <strong>{{appoinmentData.data.radiologist.fullName}}</strong>
         </div>
         <button>Initiate Image Aquisition</button>
       </div>

@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CoreModule } from '../../modules';
 import { Router, RouterModule } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { ErrorResponse } from '../../interfaces';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,9 @@ export class LoginComponent {
   LoginForm!: FormGroup
   hidePassword: boolean = false
   isLoading: boolean = false
-  constructor(private fb: FormBuilder, private authService: AuthService, private router:Router) { }
+  error!: string
+
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
   createForm() {
     return this.fb.group({
@@ -29,27 +33,53 @@ export class LoginComponent {
   }
   ngOnInit() {
     this.LoginForm = this.createForm()
+    this.LoginForm.valueChanges.subscribe(() => {
+      this.error = ''
+    })
   }
-
   login() {
     if (this.LoginForm.valid) {
       this.isLoading = true
-      this.authService.login(this.LoginForm.controls['email'].value, this.LoginForm.controls['password'].value).subscribe(data => {
-        if (data) {
-          localStorage.setItem('token', data.data.token.accessToken)
-          this.authService.getCurrentUser().subscribe(data => {
-            if (data) {
-              if (data.data.role === 'ADMIN') {
-                this.router.navigate(['/dashboard/admin']);
-              }
-            }
+      this.authService.login(this.LoginForm.controls['email'].value, this.LoginForm.controls['password'].value)
+        .pipe(
+          catchError(() => {
+            this.error = 'Something went wrong'
+            this.isLoading = false;
+            return of(null);
           })
-          this.isLoading = false
-        }
-      })
+        )
+        .subscribe((data) => {
+          if (data) {
+            localStorage.setItem('token', data.data.token.accessToken)
+            this.authService.getCurrentUser().subscribe(data => {
+              if (data) {
+                this.redirectUserWithRole(data.data.role);
+              }
+            })
+            this.isLoading = false
+          }
+        })
     }
   }
+
+  
   togglePassword() {
     this.hidePassword = !this.hidePassword
+  }
+
+  redirectUserWithRole(role: string): void {
+    switch (role) {
+      case 'ADMIN':
+        this.router.navigate(['/dashboard/admin']);
+        break;
+      case 'FRONT_DESK':
+        this.router.navigate(['/dashboard/frontdesk']);
+        break;
+      case 'RADIOLOGIST':
+        this.router.navigate(['/radiology']);
+        break;
+      default:
+        break;
+    }
   }
 }

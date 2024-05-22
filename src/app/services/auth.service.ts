@@ -2,65 +2,183 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/env';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AppointmentCreation, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, Users, UserWithRole } from '../interfaces';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  token:string | null = null;
-  constructor(private http:HttpClient) { }
+  token: string | null = null;
+  constructor(private http: HttpClient) { }
 
-  login(email:string, password:string):Observable<loginResponse>{
-    return this.http.post<loginResponse>(`${environment.BACKEND_URL}/auth/signin`, {
+  login(email: string, password: string): Observable<loginResponse> {
+    const response =  this.http.post<loginResponse>(`${environment.BACKEND_URL}/auth/signin`, {
       email, password
-    })
-    
+    })    
+    return response
   }
-
-  getCurrentUser():Observable<currentUserResponse>{
+  logout(): Observable<Logout> {
     this.setHeaders();
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
-    return this.http.get<currentUserResponse>(`${environment.BACKEND_URL}/auth/currentUser`,{
+    return this.http.post<Logout>(`${environment.BACKEND_URL}/auth/signOut`, {
       headers: header
     })
   }
-  setHeaders(){
-     this.token = localStorage.getItem('token');
+  getCurrentUser(): Observable<currentUserResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<currentUserResponse>(`${environment.BACKEND_URL}/auth/currentUser`, {
+      headers: header
+    })
   }
-}
-interface loginResponse {
-  data: {
-    token: {
-      accessToken: string
-      tokenType: string
-      refreshToken: any
+  setHeaders() {
+    this.token = localStorage.getItem('token');
+  }
+
+  getInsuranceList(): Observable<InsuranceList> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<InsuranceList>(`${environment.BACKEND_URL}/insurances/list`, {
+      headers: header
+    })
+  }
+
+  getImageTypeList(): Observable<ImageTpesList> {
+    this.setHeaders()
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<ImageTpesList>(`${environment.BACKEND_URL}/imageTypes/list`, {
+      headers: header,
+    });
+  }
+
+  createPatient(firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    address: string,
+    dateOfBirth: Date): Observable<Patient> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.post<Patient>(`${environment.BACKEND_URL}/patients/register`,
+      {
+        firstName,
+        lastName,
+        phoneNumber,
+        address,
+        dateOfBirth
+      },
+      {
+        headers: header,
+      })
+  }
+
+  getUsers(page: number, limit: number): Observable<Users> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<Users>(`${environment.BACKEND_URL}/users/search`, {
+      headers: header,
+      params: {
+        page,
+        limit
+      }
+    })
+  }
+  getUsersAndRoles(role?: string): Observable<UserWithRole> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    if (role) {
+      return this.http.get<UserWithRole>(`${environment.BACKEND_URL}/users/asList`, {
+        headers: header,
+        params: {
+          role,
+        }
+      })
     }
+    return this.http.get<UserWithRole>(`${environment.BACKEND_URL}/users/asList`, {
+      headers: header,
+    })
   }
-  message: string
-  status: string
-  error: any
-  timestamp: string
+  createAppointment(
+    patientId: string,
+    radiologistId: string,
+    technicianId: string,
+    insuranceId: string,
+    imageTypeId: string,
+    date: Date,
+  ): Observable<AppointmentCreation> {
+    this.setHeaders()
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.post<AppointmentCreation>(`${environment.BACKEND_URL}/patientAppointments/register`,
+      {
+        patientId,
+        radiologistId,
+        technicianId,
+        insuranceId,
+        imageTypeId,
+        date,
+      },
+      {
+        headers: header,
+      })
+  }
+
+  createInsurance(name: string, rate: number): Observable<InsuranceData> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.post<InsuranceData>(`${environment.BACKEND_URL}/insurances/register`,
+      {
+        name,
+        rate
+      },
+      {
+        headers: header
+      })
+  }
+  createImageType(name: string, totalCost: number): Observable<ImageTypeData> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.post<ImageTypeData>(`${environment.BACKEND_URL}/imageTypes/register`,
+      {
+        name,
+        totalCost
+      },
+      {
+        headers: header
+      })
+  }
+
+  getPatients(page: number, limit: number): Observable<PatientsData> {
+    this.setHeaders()
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<PatientsData>(`${environment.BACKEND_URL}/patients`, {
+      headers: header,
+      params: {
+        page,
+        limit
+      }
+    }
+    )
+  }
 }
 
-export interface currentUserResponse {
-  data: {
-    createdAt: string
-    updatedAt: string
-    id: string
-    firstName: string
-    lastName: string
-    fullName: string
-    phoneNumber: string
-    email: string
-    role: string
-    status: string
-    loginStatus: string
-    lastLogin: string
-  }
-  message: string
-  status: string
-  error: {}
-  timestamp: string
-}
 

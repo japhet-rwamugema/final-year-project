@@ -9,31 +9,37 @@ import { RadiologyStudyComponent } from './components/radiology-study/radiology-
 import { PatientCheckInComponent } from './components/patient-check-in/patient-check-in.component';
 import { AdminDashboardUsersComponent } from './components/admin-dashboard-users/admin-dashboard-users.component';
 import { AdminDashboardRolesComponent } from './components/admin-dashboard-roles/admin-dashboard-roles.component';
+import { FrontDeskDashboardComponent } from './components/front-desk-dashboard/front-desk-dashboard.component';
 
 export const routes: Routes = [{
-    path:'', component:LoginComponent
-},{
-    path:'dashboard/admin', component: AdminDashboardComponent
-}, 
-{
-    path:'dashboard/admin/users', component: AdminDashboardUsersComponent
+    path: '', component: LoginComponent
+}, {
+    path: 'dashboard/admin', component: AdminDashboardComponent
 },
 {
-    path:'dashboard/admin/roles', component: AdminDashboardRolesComponent
+    path: 'dashboard/admin/users', component: AdminDashboardUsersComponent
 },
 {
-    path:'frontdesk', component: FrontDeskComponent,
-},
-    {
-        path:'frontdesk/appointment-confirmation', component: FrontDestPatientConfirmationComponent
-    },{
-        path:'technologist/patient-studies', component: TechnologistStudiesComponent
-    },{
-        path:'technologist/reports', component: TechnologistReportComponent
-    }, {
-        path:'radiology', component:RadiologyStudyComponent
+    path: 'dashboard/admin/roles', component: AdminDashboardRolesComponent
     },
     {
-        path:"patient-checkin", component:PatientCheckInComponent
-    }
+    path:'dashboard/frontdesk', component: FrontDeskDashboardComponent
+},
+{
+    path: 'dashboard/frontdesk/create', component: FrontDeskComponent,
+},
+{
+    path: 'dashboard/frontdesk/appointment-confirmation', component: FrontDestPatientConfirmationComponent
+}, {
+    path: 'technologist/patient-studies', component: TechnologistStudiesComponent
+}, {
+    path: 'technologist/reports', component: TechnologistReportComponent
+}, {
+    path: 'radiology', component: RadiologyStudyComponent
+},
+{
+    path: "patient-checkin", component: PatientCheckInComponent
+},
+
+
 ];

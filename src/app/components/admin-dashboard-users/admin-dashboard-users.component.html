@@ -35,27 +35,41 @@
           <img src="../../../assets/images/avatar.svg" alt="" />
           <span>Admin</span>
         </div>
-        <button>
+        @if (!isLoading) {
+        <button (click)="logout()">
           Logout <img src="../../../assets/images/logout.svg" alt="" />
         </button>
+        }@else {
+        <button><app-spinner></app-spinner></button>
+        }
       </div>
     </aside>
     <div class="container">
+      @if (isLoading) {
+        <app-spinner></app-spinner>
+  }
+      @if (users && users.data.content.length > 0  || isLoading) {
       <div class="search-container">
         <h1>Employee & their roles</h1>
         <div class="search-actions">
-          <button>
+          <button (click)="refreshPage()">
             <img src="../../../assets/images/refresh.svg" alt="" />
           </button>
-          <button>
-            <img src="../../../assets/images/funnel.svg" alt="" />
+          <button (click)="openCreateInsurance()">
+            + insurance
           </button>
-          <button>
-            <img src="../../../assets/images/download.svg" alt="" />
+          <button (click)="openAddImage()">
+            + image type
           </button>
-          <input type="text" placeholder="Search..." />
+          <input type="text" placeholder="Search..." [(ngModel)]="searchText"/>
         </div>
       </div>
+      @if (createInsurance) {
+        <app-create-insurance></app-create-insurance>
+      }
+      @if (addImage) {
+        <app-addimagetype></app-addimagetype>
+      }
       <table>
         <thead>
           <tr>
@@ -67,10 +81,10 @@
           </tr>
         </thead>
         <tbody>
-          @for (item of tableData; track $index) {
+          @if (users) { @for (item of users.data.content | FilterPipe:searchText ; track $index) {
           <tr>
-            <td>{{ item.staffId }}</td>
-            <td>{{ item.user }}</td>
+            <td>{{ item.id | trim}}</td>
+            <td>{{ item.firstName }} {{ item.lastName }}</td>
             <td>{{ item.role }}</td>
             <td>{{ item.status }}</td>
             <td class="actions-container">
@@ -84,7 +98,7 @@
                     >Edit</span
                   >
                 </button>
-                <button class="dropdown-btn">
+                <button class="dropdown-btn" (click)="deleteUser(item.id)">
                   <img
                     src="../../../assets/images/delete-icon.svg"
                     alt=""
@@ -93,10 +107,27 @@
               </div>
             </td>
           </tr>
-          }
+          } }
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button class="view-all-btn">
+                <img src="../../../assets/images/arrowe-view.svg" alt="" /><span
+                  >View all
+                </span>
+              </button>
+            </td>
+          </tr>
         </tbody>
-        <button class="view-all-btn">View all</button>
       </table>
+    }@else {
+      <h1 style="color: red">
+        No users found
+      </h1>
+    }
     </div>
   </div>
 </div>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="insuranceForm">
+      <div class="form-field">
+        <label for="name">Insurance Name</label>
+        <input id="name" type="text" formControlName="name" placeholder="Enter insurance name">
+      </div>
+      <div class="form-field">
+        <label for="rating">Rating</label>
+        <input id="rating" type="number" formControlName="rating" placeholder="Enter rating">
+      </div>
+      @if (!isLoading) {
+          <button type="submit" mat-raised-button color="primary"  (click)="onSubmit()">Submit</button>
+        }@else {
+            <button type="submit"><app-spinner></app-spinner></button>
+        }
+    </form>
+  </div>
+</div>

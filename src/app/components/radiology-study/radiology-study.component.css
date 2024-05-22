@@ -1,33 +1,147 @@
 .main-content {
-    width: 100%;
-    height: 100vh;
-    background-color: #4e5b09;
-  }
-  nav {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-  }
-  nav img {
-    margin-left: 20px;
-  }
-  .main-div {
-    display: flex;
-    background-color: #ddd;
-    align-items: center;
-    height: 950px;
-  }
+width: 100%;
+height: 100vh;
+background-color: #4e5b09;
+}
+nav {
+  width: 100%;
+  position: fixed;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  background-color: #4e5b09;
+  top: 0;
+}
+nav img {
+  margin-left: 20px;
+}
+.main-div {
+  display: flex;
+  background-color: #ddd;
+  height: fit-content;
+  width: 100%;
+}
+.studies-container {
+  width: 80%;
+  height: fit-content;
+  margin: 70px auto;
+  background-color: #ddd;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  left: 4rem;
+}
+h1 {
+  text-align: center;
+  margin: 10px;
+}
+.comment-container {
+  width: 100%;
+  height: 100%;
+}
+.report-container {
+  width: 100%;
+  height: 180px;
+  display: grid;
+}
+.report-grp {
+  width: 100%;
+  height: 63px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+.comment {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.comment .comment-grp{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.comment .comment-grp img {
+  width: 500px;
+}
+.comment-grp input {
+  width: 361px;
+  height: 97px;
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
+  box-sizing: border-box;
+  color: #928F8F;
+  font-size: 20px;
+}
+
+.comment-grp input:focus{
+  outline: none;
+} 
+#Patient-id {
+  min-width: 200px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.report-grp #Patient-id span:nth-child(1){
+  font-weight: bold;
+  font-size: 24px;
+}
+.report-grp #Patient-id span:nth-child(2){
+  font-size: 24px;
+}
+#Patient-name {
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+#Patient-name span:nth-child(1){
+  font-weight: bold;
+  font-size: 24px;
+}
+#Patient-name span:nth-child(2){
+  font-size: 24px;
+}
+#radio {
+  font-weight: bold;
+  font-size: 24px;
+}
+.report-grp button {
+  width: 280px;
+  height: 38px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4e5b09;
+  color: white;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
   
   aside {
     width: 200px;
-    height: 950px;
+    height: 100vh;
     background-color: #fcf7ea;
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: center;
     position: fixed;
+    top: 0;
+    left: 0;
   }
   
   aside .avatar {
@@ -56,112 +170,5 @@
     border: none;
     cursor: pointer;
     color: #000;
-  }
- .studies-container {
-    margin: 0 auto;
-    width: 80%;
-    height: 950px;
-    padding: 20px;
-    box-sizing: border-box;
- }
-
- .studies-container h1 {
-    text-align: center;
-}
-.comment-container {
-    width: 100%;
-    height: 100%;
-    margin-top: 10px;
-}
-.report-container {
-    width: 100%;
-    height: 180px;
-    display: grid;
-}
-.report-grp {
-    width: 100%;
-    height: 63px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 15px;
-    padding: 0 30px;
-    box-sizing: border-box;
-}
-#Patient-id {
-    min-width: 200px;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-}
-
-.report-grp #Patient-id span:nth-child(1){
-    font-weight: bold;
-    font-size: 24px;
-}
-.report-grp #Patient-id span:nth-child(2){
-    font-size: 24px;
-}
-#Patient-name {
-    width: 350px;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-}
-
-#Patient-name span:nth-child(1){
-    font-weight: bold;
-    font-size: 24px;
-}
-#Patient-name span:nth-child(2){
-    font-size: 24px;
-}
-#radio {
-    font-weight: bold;
-    font-size: 24px;
-}
-.report-grp button {
-    width: 280px;
-    height: 38px;
-    border: none;
-    border-radius: 8px;
-    background-color: #4e5b09;
-    color: white;
-    cursor: pointer;
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
-.comment {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.comment .comment-grp{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-.comment .comment-grp img {
-    width: 700px;
-    max-height: 400px;
-}
-
-.comment-grp input {
-    width: 361px;
-    height: 97px;
-    border-radius: 5px;
-    border: none;
-    padding-left: 10px;
-    box-sizing: border-box;
-    color: #928F8F;
-    font-size: 20px;
-}
-
-.comment-grp input:focus{
-    outline: none;
+  
 }
