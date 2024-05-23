@@ -1,0 +1,109 @@
+<div class="main-content">
+  <nav>
+    <img src="../../../assets/images/logo.svg" alt="" />
+  </nav>
+  <div class="main-div">
+    <aside>
+      <div class="link">
+        <a
+          routerLink="/dashboard/frontdesk"
+          routerLinkActive="active-class"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home</a
+        >
+      </div>
+      <div class="profile">
+        <div class="avatar">
+          <img src="../../../assets/images/avatar.svg" alt="" />
+          <span>{{role}}</span>
+        </div>
+        @if (logoutLoading) {
+        <button><app-spinner></app-spinner></button>
+        }@else {
+        <button (click)="logout()">
+          Logout <img src="../../../assets/images/logout.svg" alt="" />
+        </button>
+        }
+      </div>
+    </aside>
+    <div class="container">
+      <div class="search-container">
+        <div class="card-container">
+          <div class="card">
+            <h4>Total number of appointments</h4>
+            <div class="card-bottom">
+              <span>{{ patientData.data.content.length }}</span>
+              <img src="../../../assets/images/patients.svg" alt="" />
+            </div>
+          </div>
+          @if (isLoading) {
+          <app-spinner></app-spinner>
+          }
+          <div class="search">
+            <input type="date" [formControl]="dataControl" (change)="change()">
+            <input
+              type="text"
+              placeholder="search patient"
+              [(ngModel)]="searchText"
+            />
+          </div>
+        </div>
+        <div class="search-actions">
+          <h1>Recent Activity</h1>
+          <img src="../../../assets/images/arrow.svg" alt="" />
+        </div>
+      </div>
+      @if (patientData.data && patientData.data.content.length > 0) {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>phon number</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Image type</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of patientData.data.content | FilterPipe:searchText;
+            track $index) {
+            <tr>
+              <td>{{item.patient.phoneNumber}}</td>
+              <td>{{ item.patient.firstName }}</td>
+              <td>{{ item.patient.lastName }}</td>
+              <td>{{ item.imageType.name }}</td>
+              <td>{{ item.status }}</td>
+              <td class="actions-container">
+                <div class="actions">
+                  <img src="../../../assets/images/ellipsis.svg" alt="" />
+                </div>
+                <div class="dropdown">
+                  <h3>Actions</h3>
+                  <button class="dropdown-btn" (click)="report(item.id)">
+                    <img
+                      src="../../../assets/images/edit-icon.svg"
+                      alt=""
+                    /><span>study</span>
+                  </button>
+                  <button class="dropdown-btn" (click)="deleteUser(item.id)">
+                    <img
+                      src="../../../assets/images/delete-icon.svg"
+                      alt=""
+                    /><span>Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      }@else {
+      <h1 style="color: rgb(241, 94, 94)">No appointments found.</h1>
+      }
+    </div>
+  </div>
+</div>

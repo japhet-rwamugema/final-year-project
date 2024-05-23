@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/env';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AppointmentCreation, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, Users, UserWithRole } from '../interfaces';
+import { AppointmentCreation, AppointmentUserData, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, Users, UserWithRole } from '../interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -171,6 +171,20 @@ export class AuthService {
       Authorization: `Bearer ${this.token}`
     })
     return this.http.get<PatientsData>(`${environment.BACKEND_URL}/patients`, {
+      headers: header,
+      params: {
+        page,
+        limit
+      }
+    }
+    )
+  }
+  getAppointmentsByDate(page: number, limit: number, date:string): Observable<AppointmentUserData> {
+    this.setHeaders()
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<AppointmentUserData>(`${environment.BACKEND_URL}/patientAppointments/myAppointments/${date}`, {
       headers: header,
       params: {
         page,

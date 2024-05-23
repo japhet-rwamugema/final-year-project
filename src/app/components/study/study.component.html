@@ -1,0 +1,92 @@
+<div class="main-content">
+  <nav>
+    <img src="../../../assets/images/logo.svg" alt="" />
+  </nav>
+  <div class="main-div">
+    <aside>
+      <div class="avatar">
+        <img src="../../../assets/images/avatar.svg" alt="" />
+        <span>{{ role }}</span>
+      </div>
+      <button>
+        Logout <img src="../../../assets/images/logout.svg" alt="" />
+      </button>
+    </aside>
+    <div class="studies-container">
+      <h1>Patient studies</h1>
+      @switch (viewMode) { @case ('hide') {
+      <div class="report-container">
+        <div class="report-grp">
+          @for (item of data; track $index) {
+          <div id="Patient-id">
+            <span>Patient ID:</span>
+            <span>{{ item.patient.id | trim }}</span>
+          </div>
+          <div id="Patient-name">
+            <span>Patient name:</span>
+            <span
+              >{{ item.patient.firstName }} {{ item.patient.lastName }}</span
+            >
+          </div>
+          }
+          <button (click)="showMore()">view information</button>
+        </div>
+         <div class="report-grp">
+          <span id="radio">{{ role }}</span>
+          <button (click)="makeReport()">Make report</button>
+        </div>
+      </div>
+      } @case ('more') { @for (item of data; track $index) {
+      <div class="container">
+        <button (click)="viewHide()">Hide information</button>
+        <div class="info">
+          <strong>Patient Name:</strong>
+          <strong
+            >{{ item.patient.firstName }} {{ item.patient.lastName }}</strong
+          >
+        </div>
+        <div class="info">
+          <strong>Appointment Date:</strong>
+          <strong>{{ item.date }}</strong>
+        </div>
+        <div class="info">
+          <strong>Insurance company:</strong>
+          <strong>{{ item.insurance.name }}</strong>
+        </div>
+        <div class="info">
+          <strong>Technician:</strong>
+          <strong>{{ item.technician.fullName }}</strong>
+        </div>
+        <div class="info">
+          <strong>Radiologist:</strong>
+          <strong>{{ item.radiologist.fullName }}</strong>
+        </div>
+      </div>
+      } 
+     <div class="report-grp">
+          <span id="radio">{{ role }}</span>
+          <button (click)="makeReport()">Make report</button>
+        </div>
+    } 
+    }
+      <div class="comment-container">
+        <div class="comment">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="fileInput"
+            (change)="onFileSelected($event)"
+          />
+          <label class="custom-file-label" for="fileInput">+ add image</label>
+          @if (selectedimage) {
+            <div class="comment-grp">
+              <img [src]="selectedimage" alt="" />
+              <textarea placeholder="comment" [formControl]="commentControl"></textarea>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>

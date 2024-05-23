@@ -62,7 +62,7 @@ export class LoginComponent {
     }
   }
 
-  
+
   togglePassword() {
     this.hidePassword = !this.hidePassword
   }
@@ -78,6 +78,9 @@ export class LoginComponent {
       case 'RADIOLOGIST':
         this.router.navigate(['/radiology']);
         break;
+      case 'TECHNICIAN':
+        this.router.navigate(['/dashboard/technician']);
+        break
       default:
         break;
     }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-technologist-studies',
@@ -8,7 +8,6 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
   styleUrl: './technologist-studies.component.css'
 })
 export class TechnologistStudiesComponent {
-  selectedImage!: string;
 
   selectedImages: string[] = []
 
@@ -17,7 +16,6 @@ export class TechnologistStudiesComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.selectedImage = e.target.result;
         this.selectedImages.push(e.target.result);
       };
       reader.readAsDataURL(file);

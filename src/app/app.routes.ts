@@ -2,14 +2,14 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { FrontDeskComponent } from './components/front-desk/front-desk.component';
-import { FrontDestPatientConfirmationComponent } from './components/front-dest-patient-confirmation/front-dest-patient-confirmation.component';
+import { TechnicianDashboardComponent } from './components/technician/technician-dashboard.component';
 import { TechnologistStudiesComponent } from './components/technologist-studies/technologist-studies.component';
 import { TechnologistReportComponent } from './components/technologist-report/technologist-report.component';
-import { RadiologyStudyComponent } from './components/radiology-study/radiology-study.component';
 import { PatientCheckInComponent } from './components/patient-check-in/patient-check-in.component';
 import { AdminDashboardUsersComponent } from './components/admin-dashboard-users/admin-dashboard-users.component';
 import { AdminDashboardRolesComponent } from './components/admin-dashboard-roles/admin-dashboard-roles.component';
 import { FrontDeskDashboardComponent } from './components/front-desk-dashboard/front-desk-dashboard.component';
+import { StudyComponent } from './components/study/study.component';
 
 export const routes: Routes = [{
     path: '', component: LoginComponent
@@ -21,21 +21,21 @@ export const routes: Routes = [{
 },
 {
     path: 'dashboard/admin/roles', component: AdminDashboardRolesComponent
-    },
-    {
-    path:'dashboard/frontdesk', component: FrontDeskDashboardComponent
+},
+{
+    path: 'dashboard/frontdesk', component: FrontDeskDashboardComponent
 },
 {
     path: 'dashboard/frontdesk/create', component: FrontDeskComponent,
 },
 {
-    path: 'dashboard/frontdesk/appointment-confirmation', component: FrontDestPatientConfirmationComponent
+    path: 'dashboard/technician', component: TechnicianDashboardComponent
 }, {
     path: 'technologist/patient-studies', component: TechnologistStudiesComponent
 }, {
     path: 'technologist/reports', component: TechnologistReportComponent
 }, {
-    path: 'radiology', component: RadiologyStudyComponent
+    path: 'study/:id', component: StudyComponent
 },
 {
     path: "patient-checkin", component: PatientCheckInComponent
