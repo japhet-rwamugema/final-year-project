@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/env';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AppointmentCreation, AppointmentUserData, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, Users, UserWithRole } from '../interfaces';
+import { Observable, switchMap } from 'rxjs';
+import { AddImageResponse, AppointmentCreation, AppointmentUserData, CheckInResponse, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, UploadImageResponse, Users, UserWithRole } from '../interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +11,9 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<loginResponse> {
-    const response =  this.http.post<loginResponse>(`${environment.BACKEND_URL}/auth/signin`, {
+    const response = this.http.post<loginResponse>(`${environment.BACKEND_URL}/auth/signin`, {
       email, password
-    })    
+    })
     return response
   }
   logout(): Observable<Logout> {
@@ -21,7 +21,9 @@ export class AuthService {
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
-    return this.http.post<Logout>(`${environment.BACKEND_URL}/auth/signOut`, {
+    return this.http.post<Logout>(`${environment.BACKEND_URL}/auth/signOut`,
+      null,
+      {
       headers: header
     })
   }
@@ -179,7 +181,7 @@ export class AuthService {
     }
     )
   }
-  getAppointmentsByDate(page: number, limit: number, date:string): Observable<AppointmentUserData> {
+  getAppointmentsByDate(page: number, limit: number, date: string): Observable<AppointmentUserData> {
     this.setHeaders()
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
@@ -192,6 +194,84 @@ export class AuthService {
       }
     }
     )
+  }
+
+  uploadImage(file: File): Observable<UploadImageResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<UploadImageResponse>(`${environment.BACKEND_URL}/files/upload`, formData, { headers: header })
+
+  }
+
+  addImageOnAppointment(id: string, remarks: string, imageId: string): Observable<AddImageResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    const options = {
+      imageId: imageId,
+      remarks: remarks
+    }
+    return this.http.put<AddImageResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/addImage`,
+      options,
+      { headers: header })
+  }
+
+  makeReport(file: File, remarks: string, appointmentId: string): Observable<AddImageResponse> {
+    return this.uploadImage(file)
+      .pipe(
+        switchMap(response => this.addImageOnAppointment(appointmentId, remarks, response.data.id))
+      )
+  }
+
+  checkIn(id: string): Observable<CheckInResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/checkIn`,
+      null,
+      {
+      headers: header
+    })
+  }
+  qualityAssured(id: string): Observable<CheckInResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsQualityChecked`,
+      null,
+      {
+      headers: header
+    })
+  }
+  markAsConsulted(id: string, finalRemarks:string): Observable<CheckInResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsConsulted`,
+      {finalRemarks},
+      {
+      headers: header
+    })
+  }
+  markAsPaid(id: string): Observable<CheckInResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsPaid`,
+      null,
+      {
+      headers: header
+    })
   }
 }
 

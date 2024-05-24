@@ -86,11 +86,11 @@
                 </div>
                 <div class="dropdown">
                   <h3>Actions</h3>
-                  <button class="dropdown-btn" (click)="report(item.id)">
+                   <button class="dropdown-btn" (click)="report(item.id)">
                     <img
                       src="../../../assets/images/edit-icon.svg"
                       alt=""
-                    /><span>study</span>
+                    /><span>Study</span>
                   </button>
                   <button class="dropdown-btn" (click)="deleteUser(item.id)">
                     <img
@@ -98,16 +98,7 @@
                       alt=""
                     /><span>Delete</span>
                   </button>
-                  <button class="dropdown-btn" (click)="checkIn(item.id)">
-                    @if (ischeckinLoading) {
-                    <app-spinner></app-spinner>
-                    }@else {
-                    <img
-                      src="../../../assets/images/delete-icon.svg"
-                      alt=""
-                    /><span>Check in</span>
-                    }
-                  </button>
+                 
                 </div>
               </td>
             </tr>

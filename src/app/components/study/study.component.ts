@@ -6,27 +6,48 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
 import { AppointmentUserData } from '../../interfaces';
 import { TrimPipe } from '../../pipes/trim.pipe';
+import { catchError, of } from 'rxjs';
+import { CoreModule } from '../../modules';
 
 @Component({
   selector: 'app-study',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, TrimPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, TrimPipe, CoreModule],
   providers: [AuthService],
   templateUrl: './study.component.html',
   styleUrl: './study.component.css'
 })
 export class StudyComponent {
-  commentControl:FormControl
-  constructor(private authService: AuthService, private router: ActivatedRoute) {
+  radiologyReport() {
+    if (this.commentControl.valid) {
+      this.isLoading = true;
+      this.authService.markAsConsulted(this.appointmentId, this.commentControl.value)
+        .pipe(
+          catchError((error: any) => {
+            this.isLoading = false;
+            return of(null)
+          }))
+        .subscribe(data => {
+          if (data) {
+            this.isLoading = false;
+            this.route.navigate(['/dashboard/radiology']);
+          }
+        })
+    }
+  }
+  commentControl: FormControl
+  constructor(private authService: AuthService, private router: ActivatedRoute, private route: Router) {
     this.commentControl = new FormControl('', Validators.required)
-   }
+  }
   selectedimage!: File
   file!: File
   role: string = ''
   data!: any[]
+  appointmentId!: string
+  isLoading: boolean = false
 
   onFileSelected(event: any) {
-     this.file = event.target.files[0];
+    this.file = event.target.files[0];
     if (this.file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -45,6 +66,9 @@ export class StudyComponent {
   }
   ngOnInit() {
     const id = this.router.snapshot.paramMap.get('id');
+    if (id) {
+      this.appointmentId = id;
+    }
     const data = history.state
     this.data = data.data.content.filter((appointment: any) => appointment.id === id);
     console.log(this.data);
@@ -58,7 +82,22 @@ export class StudyComponent {
     this.viewMode = 'hide';
   }
 
-  makeReport() { 
-    console.log(this.commentControl.value);
+  makeReport() {
+    if (this.commentControl.valid) {
+      this.isLoading = true;
+      this.authService.makeReport(this.file, this.commentControl.value, this.appointmentId)
+        .pipe(
+          catchError((error) => {
+            this.isLoading = false;
+            return of(null)
+          })
+        )
+        .subscribe(response => {
+          if (response) {
+            this.isLoading = false;
+            this.route.navigate(['/dashboard/technician'])
+          }
+        })
+    }
   }
 }

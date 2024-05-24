@@ -75,12 +75,19 @@ export class LoginComponent {
       case 'FRONT_DESK':
         this.router.navigate(['/dashboard/frontdesk']);
         break;
+      case 'QUALITY_ASSURANCE':
+        this.router.navigate(['/quality']);
+        break;
+      case 'FINANCE':
+        this.router.navigate(['/quality']);
+        break;
       case 'RADIOLOGIST':
-        this.router.navigate(['/radiology']);
+        this.router.navigate(['/dashboard/radiology']);
         break;
       case 'TECHNICIAN':
         this.router.navigate(['/dashboard/technician']);
-        break
+        break;
+
       default:
         break;
     }

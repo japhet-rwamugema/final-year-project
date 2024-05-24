@@ -1,24 +1,23 @@
-import { Component } from '@angular/core';
-import { CoreModule } from '../../modules';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
-import { setDataService } from '../../services/data-service';
-import { AppointmentCreation, AppointmentData, AppointmentUserData, PatientsData } from '../../interfaces';
-import { FilterPipe, TrimPipe } from '../../pipes/trim.pipe';
-import { catchError, of } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { AppointmentUserData } from '../../interfaces';
+import { AuthService } from '../../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '../../modules';
+import { TrimPipe, FilterPipe } from '../../pipes/trim.pipe';
+import { setDataService } from '../../services/data-service';
 
 @Component({
-  selector: 'app-technician-dashboard',
+  selector: 'app-radiology',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CoreModule, RouterModule, HttpClientModule, TrimPipe, FilterPipe],
-  providers: [AuthService, setDataService, DatePipe],
-  templateUrl: './technician-dashboard.component.html',
-  styleUrl: './technician-dashboard.component.css',
+  providers: [AuthService, setDataService, DatePipe],  templateUrl: './radiology.component.html',
+  styleUrl: './radiology.component.css'
 })
-export class TechnicianDashboardComponent {
+export class RadiologyComponent {
 
   constructor(private authService: AuthService, private router: Router, private dataPipe: DatePipe) {
     this.dataControl = new FormControl(this.dataPipe.transform(new Date(), 'yyyy-MM-dd'))
@@ -79,20 +78,20 @@ export class TechnicianDashboardComponent {
     this.fetchData()
   }
 
-  ischeckinLoading:boolean = false
-  checkIn(id: string) {
+  ischeckinLoading: boolean = false
+  markAsQualityAssured(id: string) {
     this.ischeckinLoading = true;
-    this.authService.checkIn(id)
-     .pipe(
+    this.authService.qualityAssured(id)
+      .pipe(
         catchError(error => {
           this.ischeckinLoading = false;
           return of(null);
         })
       )
       .subscribe((data) => {
-       if (data) {
-         this.ischeckinLoading = false;
-         this.fetchData()
+        if (data) {
+          this.ischeckinLoading = false;
+          this.fetchData()
         }
       })
   }

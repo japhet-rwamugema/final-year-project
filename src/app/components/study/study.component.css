@@ -192,6 +192,9 @@ h1 {
   font-size: 24px;
 }
 .report-grp button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 280px;
   height: 38px;
   border: none;
@@ -219,4 +222,42 @@ h1 {
   font-size: 20px;
   font-weight: bold;
   color: white;
+}
+
+.radiology-container{
+  min-height: 250px;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  background-color: #ddd;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+
+.radiology-container textarea, textarea:focus {
+  width: 200px;
+  height: 80px;
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #000;
+  font-size: 20px;
+  outline: none;
+}
+
+.comment-user {
+  max-width: 500px;
+  height: fit-content;
+}
+.comment-user h2 {
+  font-size: 18px;
+}
+.radiology-container p {
+  font-weight: 500;
+  font-size: 16px;
+  margin: 10px 0;
 }

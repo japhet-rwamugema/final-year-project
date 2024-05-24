@@ -465,3 +465,134 @@ export interface AppointmentUserData  {
   error: {}
   timestamp: string
 }
+
+export interface UploadImageResponse {
+  data: {
+    createdAt: string
+    updatedAt: string
+    id: string
+    name: string
+    path: string
+    url: string
+    size: number
+    sizeType: string
+    type: string
+    status: string
+  }
+  message: string
+  status: string
+  error: {}
+  timestamp: string
+}
+export interface AddImageResponse {
+  data: {
+    id: string
+    image: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      name: string
+      path: string
+      url: string
+      size: number
+      sizeType: string
+      type: string
+      status: string
+    }
+    remarks: string
+  }
+  message: string
+  status: string
+  error: {}
+  timestamp: string
+}
+
+export interface CheckInResponse {
+  data: {
+    createdAt: string
+    updatedAt: string
+    id: string
+    refNumber: string
+    date: string
+    status: string
+    patient: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      refNumber: string
+      firstName: string
+      lastName: string
+      phoneNumber: string
+      dateOfBirth: string
+      status: string
+      address: string
+    }
+    insurance: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      name: string
+      rate: number
+      status: string
+    }
+    imageType: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      name: string
+      status: string
+      totalCost: number
+    }
+    radiologist: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      firstName: string
+      lastName: string
+      fullName: string
+      phoneNumber: string
+      email: string
+      role: string
+      status: string
+      loginStatus: string
+      lastLogin: string
+    }
+    technician: {
+      createdAt: string
+      updatedAt: string
+      id: string
+      firstName: string
+      lastName: string
+      fullName: string
+      phoneNumber: string
+      email: string
+      role: string
+      status: string
+      loginStatus: string
+      lastLogin: string
+    }
+    amountToPay: number
+    paymentStatus: string
+    finalRemarks: string
+    images: Array<{
+      id: string
+      image: {
+        createdAt: string
+        updatedAt: string
+        id: string
+        name: string
+        path: string
+        url: string
+        size: number
+        sizeType: string
+        type: string
+        status: string
+      }
+      remarks: string
+    }>
+  }
+  message: string
+  status: string
+  error: {}
+  timestamp: string
+}

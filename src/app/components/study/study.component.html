@@ -31,9 +31,17 @@
           }
           <button (click)="showMore()">view information</button>
         </div>
-         <div class="report-grp">
+        <div class="report-grp">
           <span id="radio">{{ role }}</span>
+          @switch (role) { @case ('TECHNICIAN') { @if (isLoading) {
+          <button><app-spinner></app-spinner></button>
+          }@else {
           <button (click)="makeReport()">Make report</button>
+          } } @case ('RADIOLOGIST') { @if (isLoading) {
+          <button><app-spinner></app-spinner></button>
+          }@else {
+          <button (click)="radiologyReport()">Add remark</button>
+          } } }
         </div>
       </div>
       } @case ('more') { @for (item of data; track $index) {
@@ -62,13 +70,21 @@
           <strong>{{ item.radiologist.fullName }}</strong>
         </div>
       </div>
-      } 
-     <div class="report-grp">
-          <span id="radio">{{ role }}</span>
-          <button (click)="makeReport()">Make report</button>
-        </div>
-    } 
-    }
+      }
+      <div class="report-grp">
+        <span id="radio">{{ role }}</span>
+
+        @switch (role) { @case ('TECHNICIAN') { @if (isLoading) {
+        <button><app-spinner></app-spinner></button>
+        }@else {
+        <button (click)="makeReport()">Make report</button>
+        } } @case ('RADIOLOGIST') { @if (isLoading) {
+        <button><app-spinner></app-spinner></button>
+        }@else {
+        <button (click)="radiologyReport()">Add remark</button>
+        } } }
+      </div>
+      } } @if (role ==='TECHNICIAN') {
       <div class="comment-container">
         <div class="comment">
           <input
@@ -79,13 +95,31 @@
           />
           <label class="custom-file-label" for="fileInput">+ add image</label>
           @if (selectedimage) {
-            <div class="comment-grp">
-              <img [src]="selectedimage" alt="" />
-              <textarea placeholder="comment" [formControl]="commentControl"></textarea>
-            </div>
+          <div class="comment-grp">
+            <img [src]="selectedimage" alt="" />
+            <textarea
+              placeholder="comment"
+              [formControl]="commentControl"
+            ></textarea>
+          </div>
           }
         </div>
       </div>
+      }@else {
+      <div class="radiology-container">
+        @for (item of data; track $index) { @for (image of item.images; track
+        $index) {
+        <div class="comment-user">
+          <h2>{{ item.technician.fullName }}</h2>
+          <p>{{ image.remarks }}</p>
+        </div>
+        } }
+        <div>
+          <p>Add final remark</p>
+          <textarea [formControl]="commentControl"></textarea>
+        </div>
+      </div>
+      }
     </div>
   </div>
   <div></div>
