@@ -10,6 +10,7 @@ import { FilterPipe, TrimPipe } from '../../pipes/trim.pipe';
 import { FormsModule } from '@angular/forms';
 import { CreateInsuranceComponent } from '../create-insurance/create-insurance.component';
 import { AddimagetypeComponent } from '../addimagetype/addimagetype.component';
+import { RegisteruserComponent } from '../registeruser/registeruser.component';
 
 @Component({
   selector: 'app-admin-dashboard-users',
@@ -23,7 +24,8 @@ import { AddimagetypeComponent } from '../addimagetype/addimagetype.component';
     TrimPipe,
     FilterPipe,
     CreateInsuranceComponent,
-    AddimagetypeComponent
+    AddimagetypeComponent,
+    RegisteruserComponent
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard-users.component.html',
@@ -32,30 +34,32 @@ import { AddimagetypeComponent } from '../addimagetype/addimagetype.component';
 export class AdminDashboardUsersComponent {
   searchText: string = '';
   isLoading: boolean = false;
+  logoutLoading: boolean = false;
   users!: Users;
   error!: string;
   createInsurance: boolean = false;
   addImage: boolean = false;
+  createUser: boolean = false;
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.refreshPage();
+    this.fetchUser();
   }
 
   logout() {
-    this.isLoading = true;
+    this.logoutLoading = true;
     this.authService
       .logout()
       .pipe(
         catchError((error) => {
           this.error = 'Something went wrong';
-          this.isLoading = false;
+          this.logoutLoading = false;
           return of(null);
         })
       )
       .subscribe((logout) => {
         localStorage.clear();
-        this.isLoading = false;
+        this.logoutLoading = false;
         this.router.navigate(['/']);
       });
   }
@@ -66,7 +70,7 @@ export class AdminDashboardUsersComponent {
     );
   }
 
-  refreshPage() {
+  fetchUser() {
     this.isLoading = true;
     this.authService
       .getUsers(1, 5)
@@ -85,13 +89,51 @@ export class AdminDashboardUsersComponent {
       });
   }
 
+  openCreateUser() { 
+    this.createUser = !this.createUser;
+    this.addImage = false;
+    this.createInsurance = false;
+  }
   openCreateInsurance() {
     this.addImage = false;
+    this.createUser = false;
     this.createInsurance = !this.createInsurance;
   }
 
   openAddImage() {
     this.createInsurance = false
+    this.createUser = false;
     this.addImage =!this.addImage;
+  }
+
+  statusLoading: boolean = false;
+  changeStatus(id: string) {
+    this.statusLoading = true;
+    this.authService.deActivateStatus(id).pipe(
+      catchError((error) => {
+        this.statusLoading = false;
+        return of(null);
+      })
+    ).subscribe((response) => { 
+      if (response) {
+        this.statusLoading = false;
+        this.fetchUser();
+      }
+    });
+  }
+
+  activateStatus(id: string) {
+    this.statusLoading = true;
+    this.authService.activateStatus(id).pipe(
+      catchError((error) => {
+        this.statusLoading = false;
+        return of(null);
+      })
+    ).subscribe((response) => { 
+      if (response) {
+        this.statusLoading = false;
+        this.fetchUser();
+      }
+    });
   }
 }

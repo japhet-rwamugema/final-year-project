@@ -35,71 +35,49 @@
           <img src="../../../assets/images/avatar.svg" alt="" />
           <span>Admin</span>
         </div>
-        <button>
+        <button (click)="logout()">
           Logout <img src="../../../assets/images/logout.svg" alt="" />
         </button>
       </div>
     </aside>
     <div class="container">
+      @if (!isLoading) {
       <div class="search-container">
-        <h1>Roles & Permissions</h1>
+        <h1>
+          Roles & Permissions <span>{{ tableData.data.content.length }}</span>
+        </h1>
         <div class="search-actions">
-          <input type="search" placeholder="Search..." />
-          <button class="new-role" (click)="openAddRoleDialog()">
-            + New Role
-          </button>
+          <input type="search" placeholder="Search..." [(ngModel)]="seartchText"/>
+          <select [formControl]="roleControl" (change)="change()">
+            <option [value]="'ADMIN'">Admin</option>
+            <option [value]="'TECHNICIAN'">Techinician</option>
+            <option [value]="'RADIOLOGIST'">Radiologist</option>
+            <option [value]="'QUALITY_ASSURANCE'">Quality assurance</option>
+            <option [value]="'FINANCE'">Finance</option>
+            <option [value]="'FRONT_DESK'">Frontdesk</option>
+          </select>
         </div>
-        @if (addRole) {
-        <div class="create-role">
-          <div class="close">
-            <h2>Add role</h2>
-            <button (click)="closeAddRoleDialog()">
-              <img src="../../../assets/images/close.svg" alt="" />
-            </button>
-          </div>
-          <form action="">
-            <div class="form-grp">
-              <label for="name">Name</label>
-              <span>Required</span>
-              <input type="text" />
-            </div>
-            <div class="form-grp">
-              <label for="description">Description</label>
-              <span>Required</span>
-              <input type="text" id="desc" />
-            </div>
-            <div class="form-grp">
-              <label for="status">Status</label>
-              <span>Required</span>
-              <input type="checkbox" />
-            </div>
-            <div class="btn">
-              <button>Cancel</button>
-              <button>Save</button>
-            </div>
-          </form>
-        </div>
-        }
       </div>
+      @if (tableData.data && tableData.data.content.length > 0) {
       <table>
         <thead>
           <tr>
-            <th>Role ID</th>
-            <th>Description</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone number</th>
             <th>Role</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          @for (item of tableData; track $index) {
+          @for (item of tableData.data.content | FilterPipe: seartchText; track $index) {
           <tr>
-            <td>{{ item.roleId }}</td>
+            <td>{{ item.fullName }}</td>
             <td>
-              <li>
-                {{ item.description }}
-              </li>
+              {{ item.email }}
             </td>
+            <td>{{ item.phoneNumber }}</td>
             <td>{{ item.role }}</td>
             <td>{{ item.status }}</td>
             <td class="actions-container">
@@ -123,21 +101,11 @@
             </td>
           </tr>
           }
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <button class="view-all-btn">
-                <img src="../../../assets/images/arrowe-view.svg" alt="" /><span
-                  >View all
-                </span>
-              </button>
-            </td>
-          </tr>
         </tbody>
       </table>
+      }}@else {
+        <app-spinner></app-spinner>
+      }
     </div>
   </div>
 </div>

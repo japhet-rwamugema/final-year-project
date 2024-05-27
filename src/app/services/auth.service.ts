@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/env';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, switchMap } from 'rxjs';
-import { AddImageResponse, AppointmentCreation, AppointmentUserData, CheckInResponse, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, UploadImageResponse, Users, UserWithRole } from '../interfaces';
+import { AddImageResponse, AppointmentCreation, AppointmentUserData, CheckInResponse, currentUserResponse, ErrorResponse, ImageTpesList, ImageTypeData, InsuranceData, InsuranceList, loginResponse, Logout, Patient, PatientsData, StatusResponse, UploadImageResponse, UserRegister, Users, UserWithRole } from '../interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +16,18 @@ export class AuthService {
     })
     return response
   }
+  userRegister(user: UserRegister): Observable<loginResponse> {
+    this.setHeaders()
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    const response = this.http.post<loginResponse>(`${environment.BACKEND_URL}/users/register`, {
+      ...user
+    }, {
+      headers: header
+    })
+    return response
+  }
   logout(): Observable<Logout> {
     this.setHeaders();
     const header = new HttpHeaders({
@@ -24,8 +36,8 @@ export class AuthService {
     return this.http.post<Logout>(`${environment.BACKEND_URL}/auth/signOut`,
       null,
       {
-      headers: header
-    })
+        headers: header
+      })
   }
   getCurrentUser(): Observable<currentUserResponse> {
     this.setHeaders();
@@ -82,17 +94,22 @@ export class AuthService {
       })
   }
 
-  getUsers(page: number, limit: number): Observable<Users> {
+  getUsers(page: number, limit: number, role?:string): Observable<Users> {
     this.setHeaders();
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('limit', limit)
+    
+    if (role) { 
+      params = params.set('role', role)
+    }
     return this.http.get<Users>(`${environment.BACKEND_URL}/users/search`, {
       headers: header,
-      params: {
-        page,
-        limit
-      }
+      params
     })
   }
   getUsersAndRoles(role?: string): Observable<UserWithRole> {
@@ -237,8 +254,8 @@ export class AuthService {
     return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/checkIn`,
       null,
       {
-      headers: header
-    })
+        headers: header
+      })
   }
   qualityAssured(id: string): Observable<CheckInResponse> {
     this.setHeaders();
@@ -248,19 +265,19 @@ export class AuthService {
     return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsQualityChecked`,
       null,
       {
-      headers: header
-    })
+        headers: header
+      })
   }
-  markAsConsulted(id: string, finalRemarks:string): Observable<CheckInResponse> {
+  markAsConsulted(id: string, finalRemarks: string): Observable<CheckInResponse> {
     this.setHeaders();
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
     return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsConsulted`,
-      {finalRemarks},
+      { finalRemarks },
       {
-      headers: header
-    })
+        headers: header
+      })
   }
   markAsPaid(id: string): Observable<CheckInResponse> {
     this.setHeaders();
@@ -270,8 +287,33 @@ export class AuthService {
     return this.http.put<CheckInResponse>(`${environment.BACKEND_URL}/patientAppointments/${id}/markAsPaid`,
       null,
       {
-      headers: header
+        headers: header
+      })
+  }
+
+  deActivateStatus(id: string): Observable<StatusResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
     })
+    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/users/${id}/deactivate`,
+    null,
+      {
+        headers: header
+      }
+    )
+  }
+  activateStatus(id: string): Observable<StatusResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/users/${id}/active`,
+    null,
+      {
+        headers: header
+      }
+    )
   }
 }
 

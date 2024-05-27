@@ -12,7 +12,14 @@ export interface InsuranceList {
   error: any
   timestamp: string
 }
-
+export interface UserRegister {
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  password: string
+  role: string
+}
 export interface Logout {
   data: {}
   message: string
@@ -295,7 +302,7 @@ export interface currentUserResponse {
   timestamp: string
 }
 
-export interface PatientsData{
+export interface PatientsData {
   data: {
     totalPages: number
     totalElements: number
@@ -349,7 +356,7 @@ export interface ErrorResponse {
   timestamp: string
 }
 
-export interface AppointmentUserData  {
+export interface AppointmentUserData {
   data: {
     totalPages: number
     totalElements: number
@@ -594,5 +601,26 @@ export interface CheckInResponse {
   message: string
   status: string
   error: {}
+  timestamp: string
+}
+
+export interface StatusResponse {
+  data: {
+    createdAt: string
+    updatedAt: string
+    id: string
+    firstName: string
+    lastName: string
+    fullName: string
+    phoneNumber: string
+    email: string
+    role: string
+    status: string
+    loginStatus: string
+    lastLogin: any
+  }
+  message: string
+  status: string
+  error: any
   timestamp: string
 }
