@@ -1,14 +1,18 @@
 <main class="main-content">
   <section class="hero-section">
     <header class="hero-header">
-      A Git-Inspired Assignment Submission System
+      RadiologyTracker
     </header>
     <p class="hero-description">
-      Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
-      libero et velit interdum, ac aliquet odio mattis. Class aptent taciti
-      sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+      Stay informed, stay prepared, and stay on track with RadiologyTracker.
+      Your health is our priority, and we're here to make your radiology
+      experience as smooth and stress-free as possible.
     </p>
-    <img src="../../../assets/images/lock.svg" alt="Educational Illustration" class="hero-image" />
+    <img
+      src="../../../assets/images/radiologyImage.jpg"
+      alt="Educational Illustration"
+      class="hero-image"
+    />
   </section>
   <aside class="login-form">
     <form class="form" [formGroup]="LoginForm">
@@ -27,24 +31,29 @@
       <div class="input-group">
         <label for="password" class="visually-hidden">Password</label>
         <input
-          type="{{hidePassword ? 'text':'password'}}"
+          type="{{ hidePassword ? 'text' : 'password' }}"
           id="password"
           placeholder="Password"
           class="input-field"
           aria-label="Password"
-          formControlName="password" 
+          formControlName="password"
         />
-        <img src="../../../assets/images/eye.svg" alt="" class="eye" (click)="togglePassword()" />
-    </div>
-    @if (error) {
-      <span class="error">{{error}}</span>
-    }
-        @if (!isLoading) {
-            <button type="submit" class="submit-button" (click)="login()">Login</button>
-        }
-        @else{
-            <button class="submit-button"><app-spinner></app-spinner></button>
-        }
+        <img
+          src="../../../assets/images/eye.svg"
+          alt=""
+          class="eye"
+          (click)="togglePassword()"
+        />
+      </div>
+      @if (error) {
+      <span class="error">{{ error }}</span>
+      } @if (!isLoading) {
+      <button type="submit" class="submit-button" (click)="login()">
+        Login
+      </button>
+      } @else{
+      <button class="submit-button"><app-spinner></app-spinner></button>
+      }
     </form>
   </aside>
 </main>

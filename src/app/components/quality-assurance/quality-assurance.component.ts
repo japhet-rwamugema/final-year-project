@@ -8,13 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../modules';
 import { TrimPipe, FilterPipe } from '../../pipes/trim.pipe';
-import { setDataService } from '../../services/data-service';
 
 @Component({
   selector: 'app-quality-assurance',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CoreModule, RouterModule, HttpClientModule, TrimPipe, FilterPipe],
-  providers: [AuthService, setDataService, DatePipe],
+  providers: [AuthService, DatePipe],
   templateUrl: './quality-assurance.component.html',
   styleUrl: './quality-assurance.component.css'
 })

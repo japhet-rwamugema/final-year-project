@@ -1,78 +1,69 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import {
-  ImageTpesList,
-  InsuranceList,
-  UserWithRole,
-} from '../../interfaces';
-import { HttpClientModule } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CoreModule } from '../../modules';
+import { AuthService } from '../../services/auth.service';
+import { catchError, of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ImageTpesList, InsuranceList, UserWithRole } from '../../interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-front-desk',
+  selector: 'app-create-appointment',
   standalone: true,
-  imports: [
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    CoreModule,
-  ],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, CoreModule, HttpClientModule],
   providers: [AuthService],
-  templateUrl: './front-desk.component.html',
-  styleUrl: './front-desk.component.css',
+  templateUrl: './create-appointment.component.html',
+  styleUrl: './create-appointment.component.css'
 })
-export class FrontDeskComponent {
+export class CreateAppointmentComponent {
   patientForm!: FormGroup;
   publisherForm!: FormGroup;
   isLoading: boolean = false;
   error: string = '';
+  id: any;
+  data: any;
+  role!: string;
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router:Router
-  ) {}
+    private activetedRoute: ActivatedRoute,
+    private router: Router,
+    private toastService: ToastrService
+  ) { }
   imageTypes: ImageTpesList[] = [];
   insuranceTypes: InsuranceList[] = [];
   users!: UserWithRole;
 
-  createForm() {
-    return this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10)],
-      address: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+  ngOnInit() {
+    this.id = this.activetedRoute.snapshot.params['id'];
+    if (this.id) {
+      this.data = history.state
+      if (this.data) {
+        this.data = this.data.data.content.find((patient: any) => patient.id === this.id)
+      }
+    }
+    this.patientForm = this.fb.group({
+      firstName: [this.data.firstName, Validators.required],
+      lastName: [this.data.lastName, Validators.required],
+      phoneNumber: [this.data.phoneNumber, Validators.required],
+      address: [this.data.address, Validators.required],
+      dateOfBirth: [this.data.dateOfBirth, Validators.required],
       imageTypeId: ['', Validators.required],
       insuranceId: ['', Validators.required],
       appointmentDate: ['', Validators.required],
       radiologistId: ['', Validators.required],
       technicianId: ['', Validators.required],
     });
-  }
-  ngOnInit() {
-    this.patientForm = this.createForm();
-    this.publisherForm = this.createForm();
-    this.authService.getUsersAndRoles().subscribe((users) => {
-      if (users) {
-        this.users = users;
-      }
-    });
+    this.publisherForm = this.patientForm
     this.authService.getImageTypeList().subscribe((imageTypes) => {
       this.imageTypes.push(imageTypes);
     });
     this.authService.getInsuranceList().subscribe((insurance) => {
       this.insuranceTypes.push(insurance);
     });
+    this.getCurrentUser();
   }
 
   onSave() {
@@ -107,7 +98,7 @@ export class FrontDeskComponent {
 
   submit() {
     if (this.publisherForm.valid) {
-      this.error =  ''
+      this.error = ''
       this.isLoading = true;
       const {
         firstName,
@@ -151,9 +142,9 @@ export class FrontDeskComponent {
                   appointmentDate.value
                 )
                 .pipe(
-                  catchError(() => {
+                  catchError((error) => {
                     this.isLoading = false;
-                    this.error = 'creating appointment failed';
+                    this.toastService.error(error.error.error);
                     return of(null);
                   })
                 )
@@ -162,15 +153,25 @@ export class FrontDeskComponent {
                     this.isLoading = false;
                     this.patientForm.reset();
                     this.publisherForm.reset();
-                    this.router.navigate(['/dashboard/frontdesk']);
+                    this.toastService.success('Appointment created successfully');
+                    setTimeout(() => {
+                      this.router.navigate(['/dashboard/frontdesk']);
+                    }, 2000);
                   } else {
                     this.isLoading = false;
-                    this.error = 'creating appointment failed';
                   }
                 });
             }
           }
         });
     }
+  }
+
+  getCurrentUser() {
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.role = user.data.role;
+      }
+    });
   }
 }

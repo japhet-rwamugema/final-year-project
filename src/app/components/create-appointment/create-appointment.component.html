@@ -6,7 +6,7 @@
     <aside>
       <div class="avatar">
         <img src="../../../assets/images/avatar.svg" alt="" />
-        <span>Front Desk Staff</span>
+        <span>{{role}}</span>
       </div>
       <button>
          Logout <img src="../../../assets/images/logout.svg" alt="" />
@@ -14,7 +14,7 @@
     </aside>
     <div class="registration">
         <h1>Patient Registration and Scheduling</h1>
-        @if (users) {
+        @if (data) {
         <div class="container">
       <form [formGroup]="patientForm">
         <div class="input-group">
@@ -231,26 +231,18 @@
             formControlName="appointmentDate"
           />
         </div>
-        @if (error) {
-          <span class="error">{{error}}</span>
-        }
         @if (isLoading) {
-          <div class="btn">
-            <button><app-spinner></app-spinner></button>
-          </div>
+            <div class="btn">
+                <button><app-spinner></app-spinner></button>
+            </div>
         }@else {
-          <div class="btn">
-            <button (click)="submit()">Submit</button>
-          </div>
+            <div class="btn">
+                <button (click)="submit()">Submit</button>
+            </div>
         }
       </form>
     </div>
-    }@else {
-      <app-spinner></app-spinner>
     }
 </div>
   </div>
-</div>
-<div>
-    <router-outlet></router-outlet>
 </div>

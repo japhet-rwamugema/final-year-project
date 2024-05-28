@@ -8,7 +8,7 @@ nav {
   height: 80px;
   display: flex;
   align-items: center;
-  background-color: #4E5B09;
+  background-color: #4e5b09;
   top: 0;
   position: fixed;
   z-index: 1000;
@@ -111,7 +111,7 @@ aside .link {
   overflow: auto;
 }
 
-.container::-webkit-scrollbar{
+.container::-webkit-scrollbar {
   display: none;
 }
 table {
@@ -121,12 +121,12 @@ table {
   border-collapse: collapse;
   margin: 15px 0;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 8px;
 }
 
 table thead tr {
-  background-color: #FAFBFF;
+  background-color: #fafbff;
   color: #000;
   text-align: left;
   font-weight: bold;
@@ -138,7 +138,7 @@ table th {
 }
 
 table tbody tr {
-  border-bottom: 1px solid #E6E8F0;
+  border-bottom: 1px solid #e6e8f0;
 }
 
 table tbody td {
@@ -147,109 +147,6 @@ table tbody td {
   width: 200px;
   box-sizing: border-box;
 }
-
-.actions {
-  display: flex;
-  width: 50px;
-  height: 50px;
-}
-
-.edit-btn,
-.delete-btn {
-  background-color: #009879;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.delete-btn {
-  background-color: #d9534f;
-}
-
-.edit-btn:hover,
-.delete-btn:hover {
-  opacity: 0.8;
-}
-
-.view-all-btn {
-  width: 195px;
-  height: 40px;
-  background-color: #9cb02f;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-  margin: 10px 0;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
-}
-
-.view-all-btn:hover {
-  opacity: 0.8;
-}
-
-.actions-container {
-  position: relative;
-  cursor: pointer;
-}
-.dropdown {
-  display: none;
-  position: absolute;
-  width: 156px;
-  height: 120px;
-  background-color: white;
-  border-radius: 8px;
-  z-index: 1;
-  top: 20px;
-  right: 10px;
-  box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
-}
-
-.dropdown h3 {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  color: #8f95b2;
-  font-size: 16px;
-  padding-left: 3px;
-  font-weight: 400;
-}
-.dropdown button:nth-child(2) {
-  background-color: #9cb02f;
-  border-left: 2px solid #d9534f;
-  color: white;
-}
-.dropdown-btn {
-  width: 100%;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dropdown-btn img,
-span {
-  margin-left: 13px;
-}
-.dropdown button:nth-child(3):hover {
-  border-left: 2px solid #dd5928;
-  background-color: #dd5928;
-  border-right: 0;
-  border-top: 0;
-  border-bottom: 0;
-  color: white;
-}
-
-.actions-container:hover .dropdown {
-  display: block;
-}
-
 .search-container {
   width: 100%;
   height: 180px;
@@ -288,27 +185,130 @@ span {
   color: #fff;
 }
 .card-bottom {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .card-bottom span {
+  margin-left: 5px;
   font-weight: bold;
   font-size: 28px;
   color: #fff;
 }
-.search-container h1 {
-  font-size: 16px;
-  margin-top: 5px;
-  font-weight: bold;
+.table-grp {
+  width: 90%;
 }
 
 .search-actions {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
+  align-items: last baseline;
+  justify-content: right;
+  margin-top: 20px;
+  position: relative;
 }
-.search-actions img {
-    cursor: pointer;
+
+.search-actions button {
+  width: 160px;
+  height: 40px;
+  margin: 0 10px;
+  background-color: #9cb02f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: 600;
+  cursor: pointer;
 }
+.search-actions button:hover {
+  box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
+  border: none;
+}
+
+.create-insurance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  position: absolute;
+  right: 190px;
+  top: 75px;
+  z-index: 10;
+}
+.create-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  position: absolute;
+  right: 10px;
+  top: 75px;
+  z-index: 10;
+}
+.form-container {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+}
+.form-container span {
+  margin: 10px 0;
+  text-transform: capitalize;
+  background-color: #9cb02f;
+  padding: 5px;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+input:focus {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.create-insurance button {
+  width: 100%;
+  padding: 10px;
+  background-color: #9cb02f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-insurance button:hover, .create-image button:hover{
+  box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);
+}
+.create-image button {
+  width: 100%;
+  padding: 10px;
+  background-color: #9cb02f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

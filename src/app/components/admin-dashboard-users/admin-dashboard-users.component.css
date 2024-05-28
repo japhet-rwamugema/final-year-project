@@ -227,6 +227,7 @@ table tbody td {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
@@ -291,4 +292,63 @@ input:focus {
 }
 .search-actions button:hover {
   box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);  border: none;
+}
+
+
+.signup-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    right: 560px;
+    top: 70px;
+    position: absolute;
+    z-index: 10;
+}
+
+.signup-form h2 {
+    margin-bottom: 20px;
+}
+
+.signup-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.signup-form input,
+.signup-form select, input:focus, select:focus {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.signup-form button {
+    width: 290px;
+    padding: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #9cb02f;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-form button:hover {
+    background-color: #9cb02f;
+}
+
+h1 span {
+  background-color: #9cb02f;
+  padding: 10px;
+  border-radius: 50%;
+  color: #ffffff;
 }

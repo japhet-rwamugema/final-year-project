@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddimagetypeComponent } from './addimagetype.component';
+import { PaginationComponent } from './pagination.component';
 
-describe('AddimagetypeComponent', () => {
-  let component: AddimagetypeComponent;
-  let fixture: ComponentFixture<AddimagetypeComponent>;
+describe('PaginationComponent', () => {
+  let component: PaginationComponent;
+  let fixture: ComponentFixture<PaginationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddimagetypeComponent]
+      imports: [PaginationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AddimagetypeComponent);
+    fixture = TestBed.createComponent(PaginationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

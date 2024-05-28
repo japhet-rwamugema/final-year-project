@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TrimPipe implements PipeTransform {
 
-  transform(value:string): unknown {
+  transform(value: string): unknown {
     return value.substring(0, 6) + '...';
   }
 
@@ -32,4 +32,38 @@ export class FilterPipe {
       }
     });
   }
+}
+
+@Pipe({
+  name: 'sortByCreatedAt',
+  standalone: true,
+})
+export class SortByCreatedAtPipe implements PipeTransform {
+  transform(users: content[]): any[] {
+    if (!users || users.length === 0) {
+      return [];
+    }
+
+    return users.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
+}
+
+interface content {
+    createdAt: string
+    updatedAt: string
+    id: string
+    firstName: string
+    lastName: string
+    fullName: string
+    phoneNumber: string
+    email: string
+    role: string
+    status: string
+    loginStatus: string
+    lastLogin?: string
 }

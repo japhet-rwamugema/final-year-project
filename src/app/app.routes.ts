@@ -10,6 +10,7 @@ import { AdminDashboardUsersComponent } from './components/admin-dashboard-users
 import { AdminDashboardRolesComponent } from './components/admin-dashboard-roles/admin-dashboard-roles.component';
 import { FrontDeskDashboardComponent } from './components/front-desk-dashboard/front-desk-dashboard.component';
 import { StudyComponent } from './components/study/study.component';
+import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 
 export const routes: Routes = [{
     path: '', component: LoginComponent
@@ -29,6 +30,9 @@ export const routes: Routes = [{
     path: 'dashboard/frontdesk/create', component: FrontDeskComponent,
 },
 {
+    path: 'dashboard/frontdesk/create/:id', component: CreateAppointmentComponent
+},
+{
     path: 'dashboard/technician', component: TechnicianDashboardComponent
 }, {
     path: 'dashboard/radiology', component: RadiologyComponent
@@ -40,6 +44,5 @@ export const routes: Routes = [{
 {
     path: "quality", component: QualityAssuranceComponent
 },
-
 
 ];

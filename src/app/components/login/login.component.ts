@@ -3,11 +3,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { CoreModule } from '../../modules';
 import { Router, RouterModule } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { ErrorResponse } from '../../interfaces';
 
 @Component({
   selector: 'app-login',

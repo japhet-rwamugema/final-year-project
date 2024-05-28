@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CoreModule } from '../../modules';
@@ -6,16 +6,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { Users } from '../../interfaces';
-import { FilterPipe, TrimPipe } from '../../pipes/trim.pipe';
-import { FormsModule } from '@angular/forms';
-import { CreateInsuranceComponent } from '../create-insurance/create-insurance.component';
-import { AddimagetypeComponent } from '../addimagetype/addimagetype.component';
-import { RegisteruserComponent } from '../registeruser/registeruser.component';
+import { FilterPipe, SortByCreatedAtPipe, TrimPipe } from '../../pipes/trim.pipe';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-dashboard-users',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
     FormsModule,
@@ -23,9 +23,8 @@ import { RegisteruserComponent } from '../registeruser/registeruser.component';
     CoreModule,
     TrimPipe,
     FilterPipe,
-    CreateInsuranceComponent,
-    AddimagetypeComponent,
-    RegisteruserComponent
+    SortByCreatedAtPipe,
+    PaginationComponent
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard-users.component.html',
@@ -35,16 +34,38 @@ export class AdminDashboardUsersComponent {
   searchText: string = '';
   isLoading: boolean = false;
   logoutLoading: boolean = false;
+  signUpLoading: boolean = false;
   users!: Users;
   error!: string;
   createInsurance: boolean = false;
   addImage: boolean = false;
   createUser: boolean = false;
-  constructor(private authService: AuthService, private router: Router) {}
-
+  signupForm: FormGroup;
+  page: number = 1;
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private toastService:ToastrService) {
+    this.signupForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['', Validators.required]
+    });
+  }
+  totalPages: number = 0;
   ngOnInit() {
     this.fetchUser();
+    if (this.users) {
+      this.totalPages = this.users.data.totalPages;
+    }
   }
+
+  onPageChanged(page: number) {
+    this.page = page;
+    this.fetchUser();
+  }
+
+
 
   logout() {
     this.logoutLoading = true;
@@ -73,7 +94,7 @@ export class AdminDashboardUsersComponent {
   fetchUser() {
     this.isLoading = true;
     this.authService
-      .getUsers(1, 5)
+      .getUsers(this.page, 5)
       .pipe(
         catchError((error) => {
           this.error = 'Something went wrong';
@@ -89,23 +110,11 @@ export class AdminDashboardUsersComponent {
       });
   }
 
-  openCreateUser() { 
+  openCreateUser() {
     this.createUser = !this.createUser;
     this.addImage = false;
     this.createInsurance = false;
   }
-  openCreateInsurance() {
-    this.addImage = false;
-    this.createUser = false;
-    this.createInsurance = !this.createInsurance;
-  }
-
-  openAddImage() {
-    this.createInsurance = false
-    this.createUser = false;
-    this.addImage =!this.addImage;
-  }
-
   statusLoading: boolean = false;
   changeStatus(id: string) {
     this.statusLoading = true;
@@ -114,7 +123,7 @@ export class AdminDashboardUsersComponent {
         this.statusLoading = false;
         return of(null);
       })
-    ).subscribe((response) => { 
+    ).subscribe((response) => {
       if (response) {
         this.statusLoading = false;
         this.fetchUser();
@@ -129,11 +138,35 @@ export class AdminDashboardUsersComponent {
         this.statusLoading = false;
         return of(null);
       })
-    ).subscribe((response) => { 
+    ).subscribe((response) => {
       if (response) {
         this.statusLoading = false;
         this.fetchUser();
       }
     });
+  }
+
+  onSubmit() {
+    if (this.signupForm.valid) {
+      this.signUpLoading = true;
+      this.authService.userRegister(this.signupForm.value)
+        .pipe(
+          catchError((error) => {
+            this.isLoading = false;
+            return of(null);
+          })
+        )
+        .subscribe((response) => {
+          if (response) {
+            this.isLoading = false;
+            this.createUser = false;
+            this.toastService.success('User created successfully');
+            setTimeout(() => {
+              this.fetchUser();
+            }, 2000)
+            this.signupForm.reset();
+          }
+        });
+    }
   }
 }

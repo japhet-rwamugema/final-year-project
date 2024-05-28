@@ -45,24 +45,73 @@
       </div>
     </aside>
     <div class="container">
-      @if (isLoading) {
-      <app-spinner></app-spinner>
-      } @if (users && users.data.content.length > 0 || isLoading) {
+      @if (users && users.data.content.length > 0 || isLoading) {
       <div class="search-container">
-        <h1>Employee & their roles</h1>
+        <h1>
+          Employee & their roles <span>{{ users.data.totalElements }}</span>
+        </h1>
         <div class="search-actions">
           <button (click)="openCreateUser()">register user</button>
-          <button (click)="openCreateInsurance()">create insurance</button>
-          <button (click)="openAddImage()">create image type</button>
           <input type="text" placeholder="Search..." [(ngModel)]="searchText" />
         </div>
       </div>
-      @if (createInsurance) {
-      <app-create-insurance></app-create-insurance>
-      } @if (addImage) {
-      <app-addimagetype></app-addimagetype>
-      } @if (createUser) {
-      <app-registeruser></app-registeruser>
+      @if (createUser) {
+      <div class="signup-form">
+        <h2>Register user</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <label for="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            required
+          />
+
+          <label for="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            required
+          />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" formControlName="email" required />
+
+          <label for="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            required
+          />
+
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            required
+          />
+
+          <label for="role">Role:</label>
+          <select id="role" formControlName="role" required>
+            <option value="">Select your role</option>
+            <option [value]="'ADMIN'">Admin</option>
+            <option [value]="'TECHNICIAN'">Techinician</option>
+            <option [value]="'RADIOLOGIST'">Radiologist</option>
+            <option [value]="'QUALITY_ASSURANCE'">Quality assurance</option>
+            <option [value]="'FINANCE'">Finance</option>
+            <option [value]="'FRONT_DESK'">Frontdesk</option>
+          </select>
+          @if (signUpLoading) {
+          <button><app-spinner></app-spinner></button>
+          }@else {
+          <button type="submit">Sign Up</button>
+          }
+        </form>
+      </div>
+
       }
       <table>
         <thead>
@@ -75,8 +124,8 @@
           </tr>
         </thead>
         <tbody>
-          @if (users) { @for (item of users.data.content | FilterPipe:searchText
-          ; track $index) {
+          @if (users.data) { @for (item of users.data.content | sortByCreatedAt
+          | FilterPipe:searchText ; track $index) {
           <tr>
             <td>{{ item.firstName }} {{ item.lastName }}</td>
             <td>{{ item.email }}</td>
@@ -88,27 +137,23 @@
               </div>
               <div class="dropdown">
                 <h3>Actions</h3>
-                @if (item.status === 'ACTIVE') {
-                  @if (!statusLoading) {
-                    <button class="dropdown-btn" (click)="changeStatus(item.id)">
-                      <img src="../../../assets/images/edit-icon.svg" alt="" /><span
-                      >change status</span
-                      >
-                    </button>
-                  }@else {
-                    <button><app-spinner></app-spinner></button>
-                  }
-                }@else if (item.status === 'INACTIVE'){
-                  @if (!statusLoading) {
-                    <button class="dropdown-btn" (click)="activateStatus(item.id)">
-                      <img src="../../../assets/images/edit-icon.svg" alt="" /><span
-                      >change status</span
-                      >
-                    </button>
-                  }@else {
-                    <button><app-spinner></app-spinner></button>
-                  }
-                }
+                @if (item.status === 'ACTIVE') { @if (!statusLoading) {
+                <button class="dropdown-btn" (click)="changeStatus(item.id)">
+                  <img src="../../../assets/images/edit-icon.svg" alt="" /><span
+                    >change status</span
+                  >
+                </button>
+                }@else {
+                <button class="dropdown-btn"><app-spinner></app-spinner></button>
+                } }@else if (item.status === 'INACTIVE'){ @if (!statusLoading) {
+                <button class="dropdown-btn" (click)="activateStatus(item.id)">
+                  <img src="../../../assets/images/edit-icon.svg" alt="" /><span
+                    >change status</span
+                  >
+                </button>
+                }@else {
+                <button><app-spinner></app-spinner></button>
+                } }
                 <button class="dropdown-btn" (click)="deleteUser(item.id)">
                   <img
                     src="../../../assets/images/delete-icon.svg"
@@ -121,6 +166,11 @@
           } }
         </tbody>
       </table>
+      <app-pagination
+        [currentPage]="page"
+        [totalPages]="users.data.totalPages"
+        (pageChanged)="onPageChanged($event)"
+      ></app-pagination>
       }@else {
       <h1 style="color: red">No users found</h1>
       }

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { CoreModule } from '../../modules';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
-import { setDataService } from '../../services/data-service';
-import { AppointmentCreation, AppointmentData, AppointmentUserData, PatientsData } from '../../interfaces';
+import { AppointmentUserData } from '../../interfaces';
 import { FilterPipe, TrimPipe } from '../../pipes/trim.pipe';
 import { catchError, of } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -14,7 +13,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-technician-dashboard',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CoreModule, RouterModule, HttpClientModule, TrimPipe, FilterPipe],
-  providers: [AuthService, setDataService, DatePipe],
+  providers: [AuthService, DatePipe],
   templateUrl: './technician-dashboard.component.html',
   styleUrl: './technician-dashboard.component.css',
 })

@@ -8,13 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../modules';
 import { TrimPipe, FilterPipe } from '../../pipes/trim.pipe';
-import { setDataService } from '../../services/data-service';
 
 @Component({
   selector: 'app-radiology',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CoreModule, RouterModule, HttpClientModule, TrimPipe, FilterPipe],
-  providers: [AuthService, setDataService, DatePipe],  templateUrl: './radiology.component.html',
+  providers: [AuthService, DatePipe],  templateUrl: './radiology.component.html',
   styleUrl: './radiology.component.css'
 })
 export class RadiologyComponent {
