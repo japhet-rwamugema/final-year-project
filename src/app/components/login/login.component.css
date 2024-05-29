@@ -133,3 +133,63 @@ select:focus {
   border-radius: 5px;
   background-color: rgb(244, 214, 214);
 }
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        height: 100vh;
+    }
+
+    .hero-section {
+        display: none;
+    }
+
+
+
+    .form {
+        padding: 20px;
+    }
+
+    .input-field, select {
+        width: 300px;
+    }
+
+    .error {
+        width: 100%;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+
+    .role-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .role-option {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-header {
+        font-size: 28px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .input-field, select {
+        padding: 8px;
+    }
+
+    .submit-button {
+        padding: 12px;
+    }
+}

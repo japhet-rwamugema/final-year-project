@@ -60,6 +60,12 @@ export class CreateAppointmentComponent {
     this.authService.getImageTypeList().subscribe((imageTypes) => {
       this.imageTypes.push(imageTypes);
     });
+    this.authService.getUsersAndRoles().subscribe((users) => { 
+      if (users) {
+        this.users = users;
+      }
+    }
+    );
     this.authService.getInsuranceList().subscribe((insurance) => {
       this.insuranceTypes.push(insurance);
     });

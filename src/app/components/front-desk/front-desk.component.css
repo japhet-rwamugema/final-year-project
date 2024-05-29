@@ -81,6 +81,10 @@ aside button {
   margin-bottom: 10px;
   display: grid;
 }
+
+.input-group label {
+  text-transform: capitalize;
+}
 .input-field {
   width: 429px;
   height: 30px;
@@ -149,4 +153,88 @@ option {
   border-radius: 4px;
   background-color: rgb(244, 205, 205);
   text-transform: capitalize;
+}
+@media (max-width: 768px) {
+  .main-div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  aside {
+    display: none;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .registration {
+    margin: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .registration h1 {
+    margin: 1rem 0 0 0;
+  }
+  .container {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .input-field, select {
+  width: 350px;
+  }
+
+  .container button, aside button {
+    width: 100%;
+  }
+
+  .btn {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .registration h1 {
+    font-size: 20px;
+  }
+
+  nav img {
+    margin-left: 10px;
+  }
+
+ 
+
+  form {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .error {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-header {
+    font-size: 28px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .input-field, select {
+    padding: 8px;
+  }
+
+  .container button {
+    padding: 12px;
+  }
 }
