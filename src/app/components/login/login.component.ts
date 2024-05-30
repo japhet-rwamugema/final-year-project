@@ -40,8 +40,8 @@ export class LoginComponent {
       this.isLoading = true
       this.authService.login(this.LoginForm.controls['email'].value, this.LoginForm.controls['password'].value)
         .pipe(
-          catchError(() => {
-            this.error = 'Something went wrong'
+          catchError((error) => {
+            this.error = error.error.message
             this.isLoading = false;
             return of(null);
           })
