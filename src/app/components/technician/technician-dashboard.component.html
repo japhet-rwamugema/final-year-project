@@ -6,7 +6,7 @@
     <aside>
       <div class="link">
         <a
-          routerLink="/dashboard/frontdesk"
+          routerLink="/dashboard/technician"
           routerLinkActive="active-class"
           [routerLinkActiveOptions]="{ exact: true }"
         >
@@ -63,9 +63,9 @@
         <table>
           <thead>
             <tr>
-              <th>phon number</th>
               <th>First name</th>
               <th>Last name</th>
+              <th>Phono</th>
               <th>Image type</th>
               <th>Status</th>
               <th>Action</th>
@@ -75,9 +75,9 @@
             @for (item of patientData.data.content | FilterPipe:searchText;
             track $index) {
             <tr>
-              <td>{{ item.patient.phoneNumber }}</td>
               <td>{{ item.patient.firstName }}</td>
               <td>{{ item.patient.lastName }}</td>
+              <td>{{ item.patient.phoneNumber }}</td>
               <td>{{ item.imageType.name }}</td>
               <td>{{ item.status }}</td>
               <td class="actions-container">
@@ -114,6 +114,11 @@
             }
           </tbody>
         </table>
+        <app-pagination
+          [totalPages]="patientData.data.totalPages"
+          [currentPage]="page"
+          (pageChanged)="onPageChange($event)"
+        ></app-pagination>
       </div>
       }@else {
       <h1 style="color: rgb(241, 94, 94)">No appointments found.</h1>

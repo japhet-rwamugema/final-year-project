@@ -294,17 +294,16 @@ input:focus {
   box-shadow: 0 4px 10px rgba(255, 2, 0, 0.3);  border: none;
 }
 
-
 .signup-form {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
-    right: 560px;
-    top: 70px;
     position: absolute;
     z-index: 10;
+    right: 195px;
+    top: 69px;
 }
 
 .signup-form h2 {

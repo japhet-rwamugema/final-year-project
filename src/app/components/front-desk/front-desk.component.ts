@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -8,14 +9,11 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import {
-  ImageTpesList,
-  InsuranceList,
-  UserWithRole,
-} from '../../interfaces';
+import { ImageTpesList, InsuranceList, UserWithRole } from '../../interfaces';
 import { HttpClientModule } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
 import { CoreModule } from '../../modules';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-front-desk',
@@ -36,20 +34,31 @@ export class FrontDeskComponent {
   publisherForm!: FormGroup;
   isLoading: boolean = false;
   error: string = '';
+  maxDate: string;
   constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router:Router
-  ) {}
+    public authService: AuthService,
+    public fb: FormBuilder,
+    public router: Router,
+    public toastr: ToastrService
+  ) {
+    this.minDate = new Date().toISOString().split('T')[0];
+    const futureDate = new Date();
+    futureDate.setDate(new Date().getDate() + 30);
+    this.maxDate = futureDate.toISOString().split('T')[0];
+  }
   imageTypes: ImageTpesList[] = [];
   insuranceTypes: InsuranceList[] = [];
   users!: UserWithRole;
-
+  minDate!: string
   createForm() {
     return this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10)],
+      phoneNumber: [
+        '',
+        [Validators.required,
+        Validators.minLength(10)]
+      ],
       address: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       imageTypeId: ['', Validators.required],
@@ -58,56 +67,47 @@ export class FrontDeskComponent {
       radiologistId: ['', Validators.required],
       technicianId: ['', Validators.required],
     });
+
+
   }
   ngOnInit() {
     this.patientForm = this.createForm();
     this.publisherForm = this.createForm();
-    this.authService.getUsersAndRoles().subscribe((users) => {
-      if (users) {
-        this.users = users;
-      }
-    });
+
+    this.getImageTypeList();
+    this.getInsuranceList();
+    this.getUserAndRoles();
+  }
+
+  getImageTypeList() {
     this.authService.getImageTypeList().subscribe((imageTypes) => {
       this.imageTypes.push(imageTypes);
     });
+  }
+  getInsuranceList() {
     this.authService.getInsuranceList().subscribe((insurance) => {
       this.insuranceTypes.push(insurance);
     });
   }
 
+  getUserAndRoles() {
+    this.authService.getUsersAndRoles().subscribe((users) => {
+      if (users) {
+        this.users = users;
+      }
+    });
+  }
   onSave() {
     if (this.patientForm.valid) {
-      const {
-        firstName,
-        lastName,
-        phoneNumber,
-        address,
-        dateOfBirth,
-        imageTypeId,
-        insuranceId,
-        appointmentDate,
-        radiologistId,
-        technicianId,
-      } = this.patientForm.controls;
-
-      this.publisherForm = this.fb.group({
-        firstName: [firstName.value, Validators.required],
-        lastName: [lastName.value, Validators.required],
-        phoneNumber: [phoneNumber.value, Validators.required],
-        address: [address.value, Validators.required],
-        dateOfBirth: [dateOfBirth.value, Validators.required],
-        imageTypeId: [imageTypeId.value, Validators.required],
-        insuranceId: [insuranceId.value, Validators.required],
-        appointmentDate: [appointmentDate.value, Validators.required],
-        radiologistId: [radiologistId.value, Validators.required],
-        technicianId: [technicianId.value, Validators.required],
-      });
+      this.publisherForm = this.fb.group(this.patientForm.controls);
+    } else {
+      this.showFormErrors(this.patientForm)
     }
   }
 
   submit() {
-    if (this.publisherForm.valid) {
-      this.error =  ''
+    if (this.publisherForm.controls['appointmentDate'].valid) {
+      this.error = '';
       this.isLoading = true;
       const {
         firstName,
@@ -131,9 +131,9 @@ export class FrontDeskComponent {
           dateOfBirth.value
         )
         .pipe(
-          catchError(() => {
+          catchError((error) => {
             this.isLoading = false;
-            this.error = 'creating patient failed';
+            this.toastr.error(error.error.message)
             return of(null);
           })
         )
@@ -172,5 +172,39 @@ export class FrontDeskComponent {
           }
         });
     }
+  }
+
+  public showFormErrors(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control && control.invalid && control.touched) {
+        const errors = this.getControlErrors(control);
+        if (errors.length > 0) {
+          this.toastr.error(`${key}: ${errors.join(', ')}`);
+        }
+      }
+    });
+  }
+
+  public getControlErrors(control: AbstractControl): string[] {
+    const errors: string[] = [];
+    if (control.errors) {
+      for (const errorName in control.errors) {
+        if (control.errors.hasOwnProperty(errorName)) {
+          switch (errorName) {
+            case 'required':
+              errors.push('is required');
+              break;
+            case 'minlength':
+              const minLengthError = control.errors['minlength'];
+              errors.push(`must be at least ${minLengthError.requiredLength} characters long`);
+              break;
+            default:
+              errors.push(`${errorName} error`);
+          }
+        }
+      }
+    }
+    return errors;
   }
 }

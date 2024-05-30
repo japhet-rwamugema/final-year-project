@@ -8,60 +8,86 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../modules';
 import { TrimPipe, FilterPipe } from '../../pipes/trim.pipe';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-radiology',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, CoreModule, RouterModule, HttpClientModule, TrimPipe, FilterPipe],
-  providers: [AuthService, DatePipe],  templateUrl: './radiology.component.html',
-  styleUrl: './radiology.component.css'
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CoreModule,
+    RouterModule,
+    HttpClientModule,
+    TrimPipe,
+    FilterPipe,
+    PaginationComponent
+  ],
+  providers: [AuthService, DatePipe],
+  templateUrl: './radiology.component.html',
+  styleUrl: './radiology.component.css',
 })
 export class RadiologyComponent {
-
-  constructor(private authService: AuthService, private router: Router, private dataPipe: DatePipe) {
-    this.dataControl = new FormControl(this.dataPipe.transform(new Date(), 'yyyy-MM-dd'))
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dataPipe: DatePipe
+  ) {
+    this.dataControl = new FormControl('');
   }
-  dataControl!: FormControl
+  dataControl!: FormControl;
   isLoading: boolean = false;
   logoutLoading: boolean = false;
-  searchText: string = ''
-  role: string = ''
-  patientData!: AppointmentUserData
+  searchText: string = '';
+  role: string = '';
+  page: number = 1;
+  patientData!: AppointmentUserData;
   ngOnInit() {
-    this.fetchData()
+    this.fetchData();
   }
 
-  fetchData() {
+  onPageChange(page: number) { 
+    this.fetchData();
+    this.page = page;
+  }
+  fetchData(date: string = this.dataControl.value) {
     this.isLoading = true;
-    this.authService.getAppointmentsByDate(1, 10, this.dataControl.value)
-      .pipe(catchError(() => {
-        this.isLoading = false;
-        return of(null);
-      }))
-      .subscribe(data => {
+    this.authService
+      .getAppointmentsByDate(1, 5, date)
+      .pipe(
+        catchError(() => {
+          this.isLoading = false;
+          return of(null);
+        })
+      )
+      .subscribe((data) => {
         if (data) {
           this.isLoading = false;
           this.patientData = data;
         }
-      })
+      });
 
-    this.authService.getCurrentUser().subscribe(user => {
+    this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.role = user.data.role;
       }
-    })
+    });
   }
 
   deleteUser(id: string) {
-    this.patientData.data.content = this.patientData.data.content.filter(patient => patient.id !== id)
+    this.patientData.data.content = this.patientData.data.content.filter(
+      (patient) => patient.id !== id
+    );
   }
 
   logout() {
     this.logoutLoading = true;
-    this.authService.logout()
+    this.authService
+      .logout()
       .pipe(
-        catchError(error => {
-          this.router.navigate(['/'])
+        catchError((error) => {
+          this.router.navigate(['/']);
           this.logoutLoading = false;
           return of(null);
         })
@@ -70,19 +96,20 @@ export class RadiologyComponent {
         localStorage.removeItem('token');
         this.logoutLoading = false;
         this.router.navigate(['/']);
-      })
+      });
   }
 
   change() {
-    this.fetchData()
+    this.fetchData();
   }
 
-  ischeckinLoading: boolean = false
+  ischeckinLoading: boolean = false;
   markAsQualityAssured(id: string) {
     this.ischeckinLoading = true;
-    this.authService.qualityAssured(id)
+    this.authService
+      .qualityAssured(id)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.ischeckinLoading = false;
           return of(null);
         })
@@ -90,11 +117,11 @@ export class RadiologyComponent {
       .subscribe((data) => {
         if (data) {
           this.ischeckinLoading = false;
-          this.fetchData()
+          this.fetchData();
         }
-      })
+      });
   }
   report(id: string) {
-    this.router.navigateByUrl(`/study/${id}`, { state: this.patientData })
+    this.router.navigateByUrl(`/study/${id}`, { state: this.patientData });
   }
 }

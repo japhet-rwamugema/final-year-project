@@ -198,20 +198,25 @@ export class AuthService {
     }
     )
   }
-  getAppointmentsByDate(page: number, limit: number, date: string): Observable<AppointmentUserData> {
-    this.setHeaders()
+  getAppointmentsByDate(page: number, limit: number, date?: string): Observable<AppointmentUserData> {
+    this.setHeaders();
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
-    })
-    return this.http.get<AppointmentUserData>(`${environment.BACKEND_URL}/patientAppointments/myAppointments/${date}`, {
-      headers: header,
-      params: {
-        page,
-        limit
-      }
+    });
+
+    let url = `${environment.BACKEND_URL}/patientAppointments/myAppointments`;
+
+    const params:any = { page: page, limit: limit };
+    if (date) {
+      params.date = date
     }
-    )
+
+    return this.http.get<AppointmentUserData>(url, {
+      headers: header,
+      params: params
+    });
   }
+
 
   uploadImage(file: File): Observable<UploadImageResponse> {
     this.setHeaders();
@@ -314,6 +319,10 @@ export class AuthService {
         headers: header
       }
     )
+  }
+
+  getFileName(name:string): Observable<ArrayBuffer> {
+    return this.http.get<ArrayBuffer>(`${environment.BACKEND_URL}/files/raw/${name}`, { responseType: 'arrayBuffer' as 'json' })
   }
 }
 

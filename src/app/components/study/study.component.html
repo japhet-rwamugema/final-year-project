@@ -8,9 +8,13 @@
         <img src="../../../assets/images/avatar.svg" alt="" />
         <span>{{ role }}</span>
       </div>
-      <button>
+      @if (!logoutLoading) {
+      <button (click)="logout()">
         Logout <img src="../../../assets/images/logout.svg" alt="" />
       </button>
+      }@else {
+      <button><app-spinner></app-spinner></button>
+      }
     </aside>
     <div class="studies-container">
       <h1>Patient studies</h1>
@@ -41,6 +45,11 @@
           <button><app-spinner></app-spinner></button>
           }@else {
           <button (click)="radiologyReport()">Add remark</button>
+          } } @case ('QUALITY_ASSURANCE') { @if (isLoading) {
+          <button><app-spinner></app-spinner></button>
+          }@else {
+          <button (click)="qualityAssured()">Mark as quality assured</button>
+
           } } }
         </div>
       </div>
@@ -105,13 +114,28 @@
           }
         </div>
       </div>
-      }@else {
+      } @else if (role === 'QUALITY_ASSURANCE') {
+      <div class="quality">
+        <img [src]="imageUrl" alt="Study image" />
+        @for (item of data; track $index) { @for (image of item.images; track
+        $index) {
+        <p class="remark">
+          {{ image.remarks }}
+        </p>
+        } }
+      </div>
+      } @else {
       <div class="radiology-container">
         @for (item of data; track $index) { @for (image of item.images; track
         $index) {
-        <div class="comment-user">
-          <h2>{{ item.technician.fullName }}</h2>
-          <p>{{ image.remarks }}</p>
+        <div class="radiology-study">
+          <img [src]="imageUrl" alt="Study image">
+          <div class="remark-container">
+            <h2>{{ item.technician.fullName }}</h2>
+            <p>
+              Remark: {{ image.remarks }}
+            </p>
+          </div>
         </div>
         } }
         <div>

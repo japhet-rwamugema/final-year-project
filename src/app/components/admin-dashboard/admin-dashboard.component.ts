@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, of } from 'rxjs';
 import { ImageTpesList, InsuranceList, PatientsData, Users } from '../../interfaces';
@@ -8,10 +8,12 @@ import { CoreModule } from '../../modules';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,6 +23,8 @@ import { ToastrService } from 'ngx-toastr';
     HttpClientModule,
     CoreModule,
     ReactiveFormsModule,
+    FormsModule,
+    CommonModule
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard.component.html',
@@ -35,7 +39,8 @@ export class AdminDashboardComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private router: Router
   ) {
     this.insuranceForm = this.fb.group({
       name: ['', Validators.required],
@@ -162,6 +167,18 @@ export class AdminDashboardComponent {
         });
     }
   }
-
-
+  isLogout: boolean = false;
+  logout() {
+    this.isLogout = true;
+    this.authService.logout().pipe(
+      catchError(() => {
+        this.isLogout = false;
+        this.router.navigate(['/']);
+        return of(null);
+      })
+    ).subscribe(() => {
+      this.isLogout = false;
+      this.router.navigate(['/']);
+    }); 
+}
 }

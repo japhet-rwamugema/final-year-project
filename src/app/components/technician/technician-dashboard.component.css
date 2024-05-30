@@ -116,6 +116,9 @@ aside .link {
 }
 .table-container {
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .expanded {
   height: fit-content;
@@ -125,7 +128,7 @@ table {
   width: 100%;
   height: 100%;
   border-collapse: collapse;
-  margin: 15px 0;
+  margin-top: -20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   border-radius: 8px;
@@ -140,7 +143,7 @@ table thead tr {
 
 table th {
   border-radius: 8px 8px 0px 0px;
-  padding: 12px 15px;
+  padding: 12px 30px;
 }
 
 table tbody tr {
@@ -148,8 +151,8 @@ table tbody tr {
 }
 
 table tbody td {
-  height: 64px;
-  padding: 0 10px;
+  height: 43px;
+  padding: 0 30px;
   width: 200px;
   box-sizing: border-box;
   text-transform: capitalize;
@@ -264,6 +267,7 @@ input:focus {
 span {
   margin-left: 13px;
 }
+
 .dropdown button:nth-child(3):hover {
   border-left: 2px solid #dd5928;
   background-color: #dd5928;
@@ -290,7 +294,7 @@ span {
 }
 .card-container {
   width: 100%;
-  height: 130px;
+  height: 110px;
   display: flex;
   justify-content: space-between;
   align-items: center;

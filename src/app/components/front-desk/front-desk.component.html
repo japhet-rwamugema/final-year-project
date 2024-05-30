@@ -45,12 +45,13 @@
             class="input-field"
             placeholder="1/1/2021"
             formControlName="dateOfBirth"
+            [max]="maxDate"
           />
         </div>
         <div class="input-group">
           <label>phoneNumber</label>
           <input
-            type="text"
+            type="tel"
             id="input3"
             class="input-field"
             placeholder="11111111"
@@ -119,10 +120,11 @@
             class="input-field"
             placeholder="Input 3"
             formControlName="appointmentDate"
+            [min]="minDate"
           />
         </div>
         <div class="btn">
-          <button (click)="onSave()">Save and Publish</button>
+          <button (click)="onSave()">Save</button>
         </div>
       </form>
       <hr />
@@ -160,7 +162,7 @@
         <div class="input-group">
           <label>phoneNumber</label>
           <input
-            type="text"
+            type="tel"
             id="input3"
             class="input-field"
             placeholder="11111111"

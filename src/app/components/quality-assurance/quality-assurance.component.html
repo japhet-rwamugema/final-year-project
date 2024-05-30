@@ -33,7 +33,7 @@
           <div class="card">
             <h4>Total number of appointments</h4>
             <div class="card-bottom">
-              <span>{{ patientData.data.content.length }}</span>
+              <span>{{ patientData.data.totalElements }}</span>
               <img src="../../../assets/images/patients.svg" alt="" />
             </div>
           </div>
@@ -63,10 +63,11 @@
         <table>
           <thead>
             <tr>
-              <th>phon number</th>
               <th>First name</th>
               <th>Last name</th>
+              <th>Phone</th>
               <th>Image type</th>
+              <th>Paid</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -75,10 +76,11 @@
             @for (item of patientData.data.content | FilterPipe:searchText;
             track $index) {
             <tr>
-              <td>{{ item.patient.phoneNumber }}</td>
               <td>{{ item.patient.firstName }}</td>
               <td>{{ item.patient.lastName }}</td>
+              <td>{{ item.patient.phoneNumber }}</td>
               <td>{{ item.imageType.name }}</td>
+              <td>{{ item.paymentStatus }}</td>
               <td>{{ item.status }}</td>
               <td class="actions-container">
                 <div class="actions">
@@ -87,27 +89,31 @@
                 <div class="dropdown">
                   <h3>Actions</h3>
                   @if (role === 'FINANCE') {
-                   <button class="dropdown-btn" (click)="markAsPaid(item.id)">
-                    @if (ischeckinLoading) {
-                    <app-spinner></app-spinner>
-                    }@else {
-                    <img
-                      src="../../../assets/images/delete-icon.svg"
-                      alt=""
-                    /><span>Paid</span>
+                    @if (item.paymentStatus === 'UNPAID' && item.status === 'CONSULTED') {
+                      <button class="dropdown-btn" (click)="markAsPaid(item.id)">
+                        @if (ischeckinLoading) {
+                          <app-spinner></app-spinner>
+                        }@else {
+                          <img
+                          src="../../../assets/images/delete-icon.svg"
+                          alt=""
+                          /><span>Mark as paid</span>
+                        }
+                      </button>
                     }
-                  </button>
                 }@else {
-                  <button class="dropdown-btn" (click)="markAsQualityAssured(item.id)">
-                    @if (ischeckinLoading) {
-                      <app-spinner></app-spinner>
-                    }@else {
-                      <img
-                      src="../../../assets/images/delete-icon.svg"
-                      alt=""
-                      /><span>Quality</span>
-                    }
-                  </button>
+                  @if (item.status === 'ATTENDED') {
+                    <button class="dropdown-btn" (click)="markAsQualityAssured(item.id)">
+                      @if (ischeckinLoading) {
+                        <app-spinner></app-spinner>
+                      }@else {
+                        <img
+                        src="../../../assets/images/delete-icon.svg"
+                        alt=""
+                        /><span>Quality</span>
+                      }
+                    </button>
+                  }
                 }
                   <button class="dropdown-btn" (click)="deleteUser(item.id)">
                     <img
@@ -122,6 +128,10 @@
             }
           </tbody>
         </table>
+        <app-pagination
+          [totalPages]="patientData.data.totalPages"
+          [currentPage]="page"
+          (pageChanged)="onPageChange($event)"></app-pagination>
       </div>
       }@else {
       <h1 style="color: rgb(241, 94, 94)">No appointments found.</h1>

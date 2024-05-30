@@ -35,19 +35,29 @@
           <img src="../../../assets/images/avatar.svg" alt="" />
           <span>Admin</span>
         </div>
+        @if (logoutLoading) {
+        <button><app-spinner></app-spinner></button>
+        }@else {
         <button (click)="logout()">
           Logout <img src="../../../assets/images/logout.svg" alt="" />
         </button>
+        }
       </div>
     </aside>
     <div class="container">
-      @if (!isLoading) {
       <div class="search-container">
         <h1>
           Roles & Permissions <span>{{ tableData.data.content.length }}</span>
         </h1>
+        @if (isLoading) {
+        <app-spinner></app-spinner>
+        }
         <div class="search-actions">
-          <input type="search" placeholder="Search..." [(ngModel)]="seartchText"/>
+          <input
+            type="search"
+            placeholder="Search..."
+            [(ngModel)]="seartchText"
+          />
           <select [formControl]="roleControl" (change)="change()">
             <option [value]="'ADMIN'">Admin</option>
             <option [value]="'TECHNICIAN'">Techinician</option>
@@ -70,7 +80,8 @@
           </tr>
         </thead>
         <tbody>
-          @for (item of tableData.data.content | FilterPipe: seartchText; track $index) {
+          @for (item of tableData.data.content | FilterPipe: seartchText; track
+          $index) {
           <tr>
             <td>{{ item.fullName }}</td>
             <td>
@@ -83,8 +94,11 @@
           }
         </tbody>
       </table>
-      }}@else {
-        <app-spinner></app-spinner>
+      <app-pagination
+        [totalPages]="tableData.data.totalPages"
+        [currentPage]="page"
+        (pageChanged)="onPageChange($event)"
+      ></app-pagination>
       }
     </div>
   </div>
