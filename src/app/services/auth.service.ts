@@ -313,7 +313,7 @@ export class AuthService {
     const header = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
-    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/users/${id}/active`,
+    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/users/${id}/activate`,
     null,
       {
         headers: header
@@ -323,6 +323,30 @@ export class AuthService {
 
   getFileName(name:string): Observable<ArrayBuffer> {
     return this.http.get<ArrayBuffer>(`${environment.BACKEND_URL}/files/raw/${name}`, { responseType: 'arrayBuffer' as 'json' })
+  }
+
+  changeStatusToInactive(id: string): Observable<StatusResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/patients/${id}/deactivate`,
+      null,
+      {
+        headers: header
+      })
+  }
+
+  changeStatusToActive(id: string): Observable<StatusResponse> {
+    this.setHeaders();
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.put<StatusResponse>(`${environment.BACKEND_URL}/patients/${id}/activate`,
+      null,
+      {
+        headers: header
+      })
   }
 }
 

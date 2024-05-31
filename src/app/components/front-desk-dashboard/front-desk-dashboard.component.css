@@ -173,10 +173,6 @@ table tbody td {
   border-radius: 5px;
 }
 
-.delete-btn {
-  background-color: #d9534f;
-}
-
 .edit-btn:hover,
 .delete-btn:hover {
   opacity: 0.8;
@@ -269,7 +265,7 @@ span {
 }
 .dropdown button:nth-child(3):hover {
   border-left: 2px solid #dd5928;
-  background-color: #dd5928;
+  background-color: #9cb02f;
   border-right: 0;
   border-top: 0;
   border-bottom: 0;

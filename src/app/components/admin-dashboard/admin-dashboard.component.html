@@ -10,7 +10,6 @@
         >
         <a routerLink="/dashboard/admin/users">Users</a>
         <a routerLink="/dashboard/admin/roles">Roles</a>
-        <a routerLink="/dashboard/admin/analytics">Analytics</a>
       </div>
       <div class="profile">
         <div class="avatar">
@@ -20,7 +19,7 @@
         @if (isLogout) {
         <app-spinner></app-spinner>
         }@else {
-        <button>
+        <button (click)="logout()">
           Logout <img src="../../../assets/images/logout.svg" alt="" />
         </button>
         }

@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { Users } from '../../interfaces';
 import { FilterPipe, SortByCreatedAtPipe, TrimPipe } from '../../pipes/trim.pipe';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ToastrService } from 'ngx-toastr';
 
@@ -47,7 +47,7 @@ export class AdminDashboardUsersComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', Validators.required]
     });
@@ -121,11 +121,13 @@ export class AdminDashboardUsersComponent {
     this.authService.deActivateStatus(id).pipe(
       catchError((error) => {
         this.statusLoading = false;
+        this.toastService.error(error.error.message);
         return of(null);
       })
     ).subscribe((response) => {
       if (response) {
         this.statusLoading = false;
+        this.toastService.success('User deactivated successfully');
         this.fetchUser();
       }
     });
@@ -136,10 +138,12 @@ export class AdminDashboardUsersComponent {
     this.authService.activateStatus(id).pipe(
       catchError((error) => {
         this.statusLoading = false;
+        this.toastService.error(error.error.message);
         return of(null);
       })
     ).subscribe((response) => {
       if (response) {
+        this.toastService.success('User activated successfully');
         this.statusLoading = false;
         this.fetchUser();
       }
@@ -152,13 +156,14 @@ export class AdminDashboardUsersComponent {
       this.authService.userRegister(this.signupForm.value)
         .pipe(
           catchError((error) => {
-            this.isLoading = false;
+            this.signUpLoading = false;
+            this.toastService.error(error.error.message);
             return of(null);
           })
         )
         .subscribe((response) => {
           if (response) {
-            this.isLoading = false;
+            this.signUpLoading = false;
             this.createUser = false;
             this.toastService.success('User created successfully');
             setTimeout(() => {
@@ -168,5 +173,42 @@ export class AdminDashboardUsersComponent {
           }
         });
     }
+    else {
+      this.showFormErrors(this.signupForm);
+    }
+  }
+
+  public showFormErrors(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control && control.invalid && control.touched) {
+        const errors = this.getControlErrors(control);
+        if (errors.length > 0) {
+          this.toastService.error(`${key}: ${errors.join(', ')}`);
+        }
+      }
+    });
+  }
+
+  public getControlErrors(control: AbstractControl): string[] {
+    const errors: string[] = [];
+    if (control.errors) {
+      for (const errorName in control.errors) {
+        if (control.errors.hasOwnProperty(errorName)) {
+          switch (errorName) {
+            case 'required':
+              errors.push('is required');
+              break;
+            case 'minlength':
+              const minLengthError = control.errors['minlength'];
+              errors.push(`must be at least ${minLengthError.requiredLength} characters long`);
+              break;
+            default:
+              errors.push(`${errorName} error`);
+          }
+        }
+      }
+    }
+    return errors;
   }
 }

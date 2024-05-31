@@ -23,12 +23,6 @@
           [routerLinkActiveOptions]="{ exact: true }"
           >Roles</a
         >
-        <a
-          routerLink="/dashboard/admin/analytics"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Analytics</a
-        >
       </div>
       <div class="profile">
         <div class="avatar">
@@ -47,7 +41,12 @@
     <div class="container">
       <div class="search-container">
         <h1>
-          Roles & Permissions <span>{{ tableData.data.content.length }}</span>
+          Roles & Permissions
+          @if (tableData) {
+            <span>{{ tableData.data.content.length }}</span>
+          }@else {
+            <span>0</span>
+          }
         </h1>
         @if (isLoading) {
         <app-spinner></app-spinner>

@@ -37,7 +37,7 @@ export const routes: Routes = [{
 }, {
     path: 'dashboard/radiology', component: RadiologyComponent
 }, {
-    path: 'technologist/reports', component: TechnologistReportComponent
+    path: 'dashboard/frontdesk/:id', component: TechnologistReportComponent
 }, {
     path: 'study/:id', component: StudyComponent
 },

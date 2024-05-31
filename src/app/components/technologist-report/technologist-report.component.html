@@ -8,67 +8,95 @@
         <img src="../../../assets/images/avatar.svg" alt="" />
         <span>Technologist</span>
       </div>
+      @if (isLoading) {
       <button>
-        Logout <img src="../../../assets/images/logout.svg" alt="" />
+        <app-spinner></app-spinner>
       </button>
+        }@else {
+          <button (click)="logout()">
+            Logout <img src="../../../assets/images/logout.svg" alt="" />
+          </button>
+        }
     </aside>
     <div class="registration">
-      <h1>Patient studies Report</h1>
       <div class="Radiology">
+        @if (data) { 
         <div class="container">
+          <h1>Patient information</h1>
           <div class="info">
             <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>{{ data.patient.firstName }}</strong>
           </div>
           <div class="info">
-            <strong>Appointment Date:</strong>
-            <strong>John Doe</strong>
+            <strong>Last Name:</strong>
+            <strong>{{ data.patient.lastName }}</strong>
           </div>
           <div class="info">
-            <strong>Appointment Date:</strong>
-            <strong>John Doe</strong>
+            <strong>Phone Number:</strong>
+            <strong>{{ data.patient.phoneNumber }}</strong>
           </div>
           <div class="info">
-            <strong>Gender:</strong>
-            <strong>John Doe</strong>
+            <strong>Date of birth:</strong>
+            <strong>{{ data.patient.dateOfBirth }}</strong>
           </div>
           <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>Address:</strong>
+            <strong>{{ data.patient.address }}</strong>
           </div>
           <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>Technician:</strong>
+            <strong>{{ data.technician.fullName }}</strong>
           </div>
           <div class="info">
-            <strong>Patient Name:</strong>
-            <strong>John Doe</strong>
+            <strong>Radiologist:</strong>
+            <strong>{{ data.radiologist.fullName }}</strong>
           </div>
-          <h2>Patient information</h2>
-        </div>
-        <div class="report-container">
-          <h2>Radiology report</h2>
-          <div class="report">
-            <div class="report-grp">
-              <img src="../../../assets/images/ct-scan.svg" alt="" />
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s,
-              </p>
-            </div>
-            <div class="report-grp">
-              <img src="../../../assets/images/ct-scan-2.svg" alt="" />
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s,
-              </p>
-            </div>
+          <div class="info">
+            <strong>Insurance:</strong>
+            <strong>{{ data.insurance.name }}</strong>
+          </div>
+          <div class="info">
+            <strong>Image Type:</strong>
+            <strong>{{ data.imageType.name }}</strong>
+          </div>
+          <div class="info">
+            <strong>Final remark:</strong>
+            <strong class="final-remark">{{ data.finalRemarks }} </strong>
           </div>
         </div>
+      }@else {
+        <div class="container">
+          <h1>Patient information</h1>
+          <div class="info">
+            <strong>Patient Name:</strong>
+            <strong>{{ patientData.firstName }}</strong>
+          </div>
+          <div class="info">
+            <strong>Last Name:</strong>
+            <strong>{{ patientData.lastName }}</strong>
+          </div>
+          <div class="info">
+            <strong>Phone Number:</strong>
+            <strong>{{ patientData.phoneNumber }}</strong>
+          </div>
+          <div class="info">
+            <strong>Date of birth:</strong>
+            <strong>{{ patientData.dateOfBirth }}</strong>
+          </div>
+          <div class="info">
+            <strong>Address:</strong>
+            <strong>{{ patientData.address }}</strong>
+          </div>
+        </div>
+        <h3 class="error">
+          This patient has no appointment yet. 
+          <button (click)="schedule()">
+          Click here to schedule one
+          </button>
+        </h3>
+      }
       </div>
+      <div></div>
     </div>
   </div>
 </div>
-<div></div>

@@ -23,12 +23,6 @@
           [routerLinkActiveOptions]="{ exact: true }"
           >Roles</a
         >
-        <a
-          routerLink="/dashboard/admin/analytics"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Analytics</a
-        >
       </div>
       <div class="profile">
         <div class="avatar">
@@ -56,7 +50,7 @@
         </div>
       </div>
       @if (createUser) {
-      <div class="signup-form" [ngClass]="{'show': createUser}">
+      <div class="signup-form" [ngClass]="{ show: createUser }">
         <h2>Register user</h2>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
           <label for="firstName">First Name:</label>
@@ -76,7 +70,7 @@
           />
 
           <label for="email">Email:</label>
-          <input type="email" id="email" formControlName="email" required />
+          <input type="email" id="email" formControlName="email" />
 
           <label for="phoneNumber">Phone Number:</label>
           <input
@@ -111,7 +105,7 @@
           }
         </form>
       </div>
-    }
+      }
       <table>
         <thead>
           <tr>
@@ -123,7 +117,7 @@
           </tr>
         </thead>
         <tbody>
-          @if (users.data) { @for (item of users.data.content | sortByCreatedAt
+          @if (users) { @for (item of users.data.content | sortByCreatedAt
           | FilterPipe:searchText ; track $index) {
           <tr>
             <td>{{ item.firstName }} {{ item.lastName }}</td>
@@ -136,29 +130,27 @@
               </div>
               <div class="dropdown">
                 <h3>Actions</h3>
-                @if (item.status === 'ACTIVE') { @if (!statusLoading) {
+                @if (item.status === 'ACTIVE' || item.status=== 'PENDING') { @if
+                (!statusLoading) {
                 <button class="dropdown-btn" (click)="changeStatus(item.id)">
                   <img src="../../../assets/images/edit-icon.svg" alt="" /><span
                     >change status</span
                   >
                 </button>
                 }@else {
-                <button class="dropdown-btn"><app-spinner></app-spinner></button>
-                } }@else if (item.status === 'INACTIVE'){ @if (!statusLoading) {
+                <button class="dropdown-btn">
+                  <app-spinner></app-spinner>
+                </button>
+                } }@else if (item.status === 'INACTIVE' ||
+                item.status==='PENDING'){ @if (!statusLoading) {
                 <button class="dropdown-btn" (click)="activateStatus(item.id)">
                   <img src="../../../assets/images/edit-icon.svg" alt="" /><span
                     >change status</span
                   >
                 </button>
                 }@else {
-                <button><app-spinner></app-spinner></button>
+                <button class="dropdown-btn"><app-spinner></app-spinner></button>
                 } }
-                <button class="dropdown-btn" (click)="deleteUser(item.id)">
-                  <img
-                    src="../../../assets/images/delete-icon.svg"
-                    alt=""
-                  /><span>Delete</span>
-                </button>
               </div>
             </td>
           </tr>

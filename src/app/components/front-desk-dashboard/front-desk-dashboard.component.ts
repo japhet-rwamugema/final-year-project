@@ -2,13 +2,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { PatientsData } from '../../interfaces';
+import { AppointmentUserData, PatientsData } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../../pipes/trim.pipe';
 import { CoreModule } from '../../modules';
 import { catchError, of } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-front-desk-dashboard',
@@ -19,6 +20,10 @@ import { PaginationComponent } from '../pagination/pagination.component';
   styleUrl: './front-desk-dashboard.component.css'
 })
 export class FrontDeskDashboardComponent {
+
+viewPatientInfo(id: string) {
+    this.router.navigateByUrl(`/dashboard/frontdesk/${id}`, { state: this.patientData })
+}
   role!: string;
   page: number = 1;
 
@@ -26,7 +31,7 @@ export class FrontDeskDashboardComponent {
     this.page = page;
     this.fetchPatients()
   }
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) { }
   isLoading: boolean = false;
   logoutLoading: boolean = false;
   searchText: string = ''
@@ -36,7 +41,6 @@ export class FrontDeskDashboardComponent {
     this.getCurrentUser()
     this.fetchPatients()
   }
-
   fetchPatients() {
     this.authService.getPatients(this.page, 5)
       .subscribe(data => {
@@ -75,6 +79,43 @@ export class FrontDeskDashboardComponent {
       .subscribe(user => {
         if (user) {
           this.role = user.data.role;
+        }
+      })
+  }
+
+  statusLoading: boolean = false;
+  changeStatus(id: string) {
+    this.statusLoading = true;
+    this.authService.changeStatusToInactive(id)
+      .pipe(
+        catchError((error) => {
+          this.statusLoading = false;
+          this.toastr.error(error.error.message)
+          return of(null);
+        })
+    ).subscribe(data => {
+      if (data) {
+        this.statusLoading = false;
+          this.toastr.success('Status changed successfully')
+          this.fetchPatients()
+        }
+      })
+  }
+
+  activateStatus(id: string) {
+    this.statusLoading = true;
+    this.authService.changeStatusToActive(id)
+      .pipe(
+        catchError((error) => {
+          this.statusLoading = false;
+          this.toastr.error(error.error.error)
+          return of(null);
+        })
+      ).subscribe(data => {
+        if (data) {
+          this.statusLoading = false;
+          this.toastr.success('Status changed successfully')
+          this.fetchPatients()
         }
       })
   }
