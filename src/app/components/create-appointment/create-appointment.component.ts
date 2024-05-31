@@ -37,7 +37,6 @@ export class CreateAppointmentComponent extends FrontDeskComponent {
   override error: string = '';
   id: any;
   data: any;
-  role!: string;
   constructor(
     authService: AuthService,
     fb: FormBuilder,
@@ -122,13 +121,5 @@ export class CreateAppointmentComponent extends FrontDeskComponent {
           }
         });
     }
-  }
-
-  getCurrentUser() {
-    this.authService.getCurrentUser().subscribe((user) => {
-      if (user) {
-        this.role = user.data.role;
-      }
-    });
   }
 }

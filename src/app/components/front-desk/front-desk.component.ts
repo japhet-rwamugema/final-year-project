@@ -35,6 +35,7 @@ export class FrontDeskComponent {
   isLoading: boolean = false;
   error: string = '';
   maxDate: string;
+  role!: string;
   constructor(
     public authService: AuthService,
     public fb: FormBuilder,
@@ -77,6 +78,7 @@ export class FrontDeskComponent {
     this.getImageTypeList();
     this.getInsuranceList();
     this.getUserAndRoles();
+    this.getCurrentUser()
   }
 
   getImageTypeList() {
@@ -100,6 +102,8 @@ export class FrontDeskComponent {
   onSave() {
     if (this.patientForm.valid) {
       this.publisherForm = this.fb.group(this.patientForm.controls);
+    } else if (this.patientForm.invalid) {
+      this.toastr.error('Please fill all required fields')
     } else {
       this.showFormErrors(this.patientForm)
     }
@@ -206,5 +210,31 @@ export class FrontDeskComponent {
       }
     }
     return errors;
+  }
+
+  getCurrentUser() { 
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.role = user.data.role;
+      }
+    });
+  }
+
+  logout() {
+    this.isLoading = true;
+    this.authService.logout()
+      .pipe(
+        catchError((error) => {
+          this.isLoading = false;
+          this.router.navigate(['/']);
+          return of(null);
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.isLoading = false;
+          this.router.navigate(['/']);
+        }
+      });
   }
 }

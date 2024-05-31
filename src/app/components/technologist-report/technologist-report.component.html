@@ -6,21 +6,21 @@
     <aside>
       <div class="avatar">
         <img src="../../../assets/images/avatar.svg" alt="" />
-        <span>Technologist</span>
+        <span>{{ role }}</span>
       </div>
       @if (isLoading) {
       <button>
         <app-spinner></app-spinner>
       </button>
-        }@else {
-          <button (click)="logout()">
-            Logout <img src="../../../assets/images/logout.svg" alt="" />
-          </button>
-        }
+      }@else {
+      <button (click)="logout()">
+        Logout <img src="../../../assets/images/logout.svg" alt="" />
+      </button>
+      }
     </aside>
     <div class="registration">
       <div class="Radiology">
-        @if (data) { 
+        @if (data) {
         <div class="container">
           <h1>Patient information</h1>
           <div class="info">
@@ -59,12 +59,15 @@
             <strong>Image Type:</strong>
             <strong>{{ data.imageType.name }}</strong>
           </div>
+          @if (data.finalRemarks ){
           <div class="info">
             <strong>Final remark:</strong>
             <strong class="final-remark">{{ data.finalRemarks }} </strong>
           </div>
+          }
         </div>
-      }@else {
+        }@else  {
+          @if (!loading) {
         <div class="container">
           <h1>Patient information</h1>
           <div class="info">
@@ -88,13 +91,12 @@
             <strong>{{ patientData.address }}</strong>
           </div>
         </div>
-        <h3 class="error">
-          This patient has no appointment yet. 
-          <button (click)="schedule()">
-          Click here to schedule one
-          </button>
-        </h3>
       }
+        <h3 class="error">
+          This patient has no appointment yet.
+          <button (click)="schedule()">Click here to schedule one</button>
+        </h3>
+        }
       </div>
       <div></div>
     </div>

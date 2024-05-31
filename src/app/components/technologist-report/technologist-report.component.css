@@ -34,6 +34,7 @@ aside {
   align-items: center;
   position: fixed;
   top: 0;
+  z-index: 5;
 }
 
 aside .avatar {
@@ -75,14 +76,14 @@ aside button {
 }
 .container {
   position: relative;
-  width: 800px;
+  width: 700px;
   height: fit-content;
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin:6rem auto 0 auto;
+  margin:6rem auto 0 8rem;
   border-radius: 18px;
   background-color: #fff;
 }
@@ -171,7 +172,7 @@ button {
 .error {
   color: red;
   font-size: 14px;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 8rem;
 }
 
 .error button{

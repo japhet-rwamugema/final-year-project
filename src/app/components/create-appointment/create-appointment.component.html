@@ -8,9 +8,15 @@
         <img src="../../../assets/images/avatar.svg" alt="" />
         <span>{{role}}</span>
       </div>
+      @if (isLoading) {
       <button>
-         Logout <img src="../../../assets/images/logout.svg" alt="" />
+        <app-spinner></app-spinner>
       </button>
+        }@else {
+          <button (click)="logout()">
+            Logout <img src="../../../assets/images/logout.svg" alt="" />
+          </button>
+        }
     </aside>
     <div class="registration">
         <h1>Patient Registration and Scheduling</h1>
@@ -123,7 +129,7 @@
           />
         </div>
         <div class="btn">
-          <button (click)="onSave()">Save and Publish</button>
+          <button (click)="onSave()">Save</button>
         </div>
       </form>
       <hr />

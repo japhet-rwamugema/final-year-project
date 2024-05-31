@@ -16,17 +16,22 @@ export class TechnologistReportComponent {
   constructor(private activeRoute: ActivatedRoute, private auth: AuthService, private router: Router) { }
   data!: any;
   patientData!: any
-  id!:string
+  role!: string;
+  id!: string
+  loading: boolean = false;
   ngOnInit() {
     this.id = this.activeRoute.snapshot.params['id'];
     const dd = history.state
     this.patientData = dd.data.content.find((patient: any) => patient.id === this.id);
     this.fetch()
+    this.getCurrentUser()
   }
   
   fetch() {
+    this.loading = true;
     this.auth.getAppointmentsByDate(1, 20)
       .subscribe((data) => {
+        this.loading = false;
         this.data = data.data.content.find((appointment) => appointment.patient.id === this.id);        
       });
   }
@@ -51,6 +56,15 @@ export class TechnologistReportComponent {
 
   schedule() {
     this.router.navigateByUrl(`/dashboard/frontdesk/create/${this.id}`, { state: history.state })
+  }
+
+  getCurrentUser() {
+    this.auth.getCurrentUser()
+      .subscribe((data) => {
+        if (data) {
+          this.role = data.data.role;
+        }
+       });
   }
 
 }

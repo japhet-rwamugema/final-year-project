@@ -8,6 +8,9 @@ nav {
   height: 80px;
   display: flex;
   align-items: center;
+  position: fixed;
+  background-color: #4e5b09;
+  z-index: 10;
 }
 nav img {
   margin-left: 20px;
@@ -20,7 +23,10 @@ nav img {
 
 aside {
   width: 200px;
-  height: 805px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #fcf7ea;
   display: flex;
   flex-direction: column;
@@ -56,7 +62,7 @@ aside button {
   color: #000;
 }
 .registration {
-  margin: -70px auto 0 auto;
+  margin: 6rem auto 0 auto;
 }
 
 .registration h1 {
@@ -66,11 +72,11 @@ aside button {
   margin-bottom: 10px;
 }
 .container {
-  width: 1090px;
+  width: 1000px;
   height: fit-content;
   display: flex;
   justify-content: space-evenly;
-  margin: 0 auto;
+  margin: 0 auto 0 11rem;
   padding: 10px;
   border-radius: 18px;
   background-color: #fff;
@@ -149,7 +155,7 @@ option {
   color: red;
   margin: 5px;
   padding: 5px 10px;
-  width:fit-content;
+  width: fit-content;
   border-radius: 4px;
   background-color: rgb(244, 205, 205);
   text-transform: capitalize;
@@ -188,11 +194,13 @@ option {
     border-radius: 4px;
   }
 
-  .input-field, select {
-  width: 350px;
+  .input-field,
+  select {
+    width: 350px;
   }
 
-  .container button, aside button {
+  .container button,
+  aside button {
     width: 100%;
   }
 
@@ -208,8 +216,6 @@ option {
   nav img {
     margin-left: 10px;
   }
-
- 
 
   form {
     margin: 10px;
@@ -230,11 +236,27 @@ option {
     font-size: 14px;
   }
 
-  .input-field, select {
+  .input-field,
+  select {
     padding: 8px;
   }
 
   .container button {
     padding: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .registration h1 {
+    margin: 0 auto 10px 15rem;
+  }
+  .container {
+    margin: 0 auto 0 14rem;
+    width: 790px;
+  }
+
+  .input-field,
+  select {
+    width: 350px;
   }
 }
