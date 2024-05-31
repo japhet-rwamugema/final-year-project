@@ -29,7 +29,7 @@ export class TechnologistReportComponent {
   
   fetch() {
     this.loading = true;
-    this.auth.getAppointmentsByDate(1, 20)
+    this.auth.getAppointmentsByDate(1, 100)
       .subscribe((data) => {
         this.loading = false;
         this.data = data.data.content.find((appointment) => appointment.patient.id === this.id);        
