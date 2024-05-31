@@ -58,7 +58,9 @@ export class FrontDeskComponent {
       phoneNumber: [
         '',
         [Validators.required,
-        Validators.minLength(10)]
+        Validators.minLength(10),
+        Validators.maxLength(10),
+        ]
       ],
       address: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
@@ -74,7 +76,7 @@ export class FrontDeskComponent {
   ngOnInit() {
     this.patientForm = this.createForm();
     this.publisherForm = this.createForm();
-
+  
     this.getImageTypeList();
     this.getInsuranceList();
     this.getUserAndRoles();
@@ -101,7 +103,8 @@ export class FrontDeskComponent {
   }
   onSave() {
     if (this.patientForm.valid) {
-      this.publisherForm = this.fb.group(this.patientForm.controls);
+      this.publisherForm.patchValue(this.patientForm.value);
+     
     } else if (this.patientForm.invalid) {
       this.toastr.error('Please fill all required fields')
     } else {
@@ -137,7 +140,7 @@ export class FrontDeskComponent {
         .pipe(
           catchError((error) => {
             this.isLoading = false;
-            this.toastr.error(error.error.message)
+            this.toastr.error(error.error.error)
             return of(null);
           })
         )
@@ -212,7 +215,7 @@ export class FrontDeskComponent {
     return errors;
   }
 
-  getCurrentUser() { 
+  getCurrentUser() {
     this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.role = user.data.role;
