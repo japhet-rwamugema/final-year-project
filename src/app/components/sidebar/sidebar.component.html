@@ -1,0 +1,27 @@
+  <aside [ngClass]="{'open': isSidebarOpen}">
+      <div class="link">
+        <a routerLink="/dashboard/admin" routerLinkActive="active-class"
+        [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+        <a routerLink="/dashboard/admin/users" routerLinkActive="active-class"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Users</a>
+        <a routerLink="/dashboard/admin/roles" routerLinkActive="active-class"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Roles</a>
+      </div>
+      <div class="profile">
+        <div class="avatar">
+          <img src="../../../assets/images/avatar.svg" alt="" />
+          <span>Admin</span>
+        </div>
+        @if (isLogout) {
+        <app-spinner></app-spinner>
+        }@else {
+        <button (click)="logout()">
+          Logout <img src="../../../assets/images/logout.svg" alt="" />
+        </button>
+        }
+      </div>
+    </aside>

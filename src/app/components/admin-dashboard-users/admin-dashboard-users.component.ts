@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CoreModule } from '../../modules';
@@ -10,6 +10,7 @@ import { FilterPipe, SortByCreatedAtPipe, TrimPipe } from '../../pipes/trim.pipe
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ToastrService } from 'ngx-toastr';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-admin-dashboard-users',
@@ -24,7 +25,8 @@ import { ToastrService } from 'ngx-toastr';
     TrimPipe,
     FilterPipe,
     SortByCreatedAtPipe,
-    PaginationComponent
+    PaginationComponent,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard-users.component.html',
@@ -54,6 +56,7 @@ export class AdminDashboardUsersComponent {
   }
   totalPages: number = 0;
   ngOnInit() {
+    this.onResize();
     this.fetchUser();
     if (this.users) {
       this.totalPages = this.users.data.totalPages;
@@ -211,4 +214,19 @@ export class AdminDashboardUsersComponent {
     }
     return errors;
   }
+  isSidebarOpen = false;
+  viewSidebar(isOpen: boolean) {
+    this.isSidebarOpen = isOpen;
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: Event): void {
+    const width = window.innerWidth;
+    this.isSidebarOpen = width > 500 ? true : false;
+  }
+
 }

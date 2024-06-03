@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, of } from 'rxjs';
@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -24,7 +25,8 @@ import { CommonModule } from '@angular/common';
     CoreModule,
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard.component.html',
@@ -59,11 +61,13 @@ export class AdminDashboardComponent {
   insuranceList!: InsuranceList;
   patientData!: PatientsData
 
+  hamburger = false;
   ngOnInit() {
     this.fetchUser();
     this.fetchImages();
     this.fetchInsurance();
     this.fetchPatients();
+    this.onResize();
   }
 
   fetchUser() {
@@ -168,17 +172,19 @@ export class AdminDashboardComponent {
     }
   }
   isLogout: boolean = false;
-  logout() {
-    this.isLogout = true;
-    this.authService.logout().pipe(
-      catchError(() => {
-        this.isLogout = false;
-        this.router.navigate(['/']);
-        return of(null);
-      })
-    ).subscribe(() => {
-      this.isLogout = false;
-      this.router.navigate(['/']);
-    }); 
-}
+  
+  isSidebarOpen = false;
+  viewSidebar(isOpen: boolean) {
+    this.isSidebarOpen = isOpen;
+  }
+
+  toggleSidebar(): void { 
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: Event): void {
+    const width = window.innerWidth;
+    this.isSidebarOpen = width > 500 ? true : false;
+  }
 }

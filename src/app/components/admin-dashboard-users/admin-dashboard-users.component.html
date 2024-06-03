@@ -1,43 +1,13 @@
 <div class="main-content">
   <nav>
     <img src="../../../assets/images/radiology-logo.jpg" alt="" />
+    <img src="../../../assets/images/hamburger.svg" alt="" (click)="toggleSidebar()" class="hamburger" />
   </nav>
   <div class="main-div">
-    <aside>
-      <div class="link">
-        <a
-          routerLink="/dashboard/admin"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Home</a
-        >
-        <a
-          routerLink="/dashboard/admin/users"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Users</a
-        >
-        <a
-          routerLink="/dashboard/admin/roles"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Roles</a
-        >
-      </div>
-      <div class="profile">
-        <div class="avatar">
-          <img src="../../../assets/images/avatar.svg" alt="" />
-          <span>Admin</span>
-        </div>
-        @if (!logoutLoading) {
-        <button (click)="logout()">
-          Logout <img src="../../../assets/images/logout.svg" alt="" />
-        </button>
-        }@else {
-        <button><app-spinner></app-spinner></button>
-        }
-      </div>
-    </aside>
+    <app-sidebar
+    [isSidebarOpen]="isSidebarOpen"
+    (sidebarToggled)="viewSidebar($event)"
+    ></app-sidebar>
     <div class="container">
       @if (users && users.data.content.length > 0 || isLoading) {
       <div class="search-container">
@@ -106,6 +76,7 @@
         </form>
       </div>
       }
+      <div class="table">
       <table>
         <thead>
           <tr>
@@ -157,6 +128,7 @@
           } }
         </tbody>
       </table>
+            </div>
       <app-pagination
         [currentPage]="page"
         [totalPages]="users.data.totalPages"
