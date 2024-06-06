@@ -226,7 +226,6 @@ export class AdminDashboardUsersComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event?: Event): void {
     const width = window.innerWidth;
-    this.isSidebarOpen = width > 500 ? true : false;
   }
 
 }

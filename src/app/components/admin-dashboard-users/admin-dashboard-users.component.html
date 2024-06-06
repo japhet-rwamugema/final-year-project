@@ -1,12 +1,17 @@
 <div class="main-content">
   <nav>
     <img src="../../../assets/images/radiology-logo.jpg" alt="" />
-    <img src="../../../assets/images/hamburger.svg" alt="" (click)="toggleSidebar()" class="hamburger" />
+    <img
+      src="../../../assets/images/hamburger.svg"
+      alt=""
+      (click)="toggleSidebar()"
+      class="hamburger"
+    />
   </nav>
   <div class="main-div">
     <app-sidebar
-    [isSidebarOpen]="isSidebarOpen"
-    (sidebarToggled)="viewSidebar($event)"
+      [isSidebarOpen]="isSidebarOpen"
+      (sidebarToggled)="viewSidebar($event)"
     ></app-sidebar>
     <div class="container">
       @if (users && users.data.content.length > 0 || isLoading) {
@@ -77,58 +82,65 @@
       </div>
       }
       <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          @if (users) { @for (item of users.data.content | sortByCreatedAt
-          | FilterPipe:searchText ; track $index) {
-          <tr>
-            <td>{{ item.firstName }} {{ item.lastName }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.role }}</td>
-            <td>{{ item.status }}</td>
-            <td class="actions-container">
-              <div class="actions">
-                <img src="../../../assets/images/ellipsis.svg" alt="" />
-              </div>
-              <div class="dropdown">
-                <h3>Actions</h3>
-                @if (item.status === 'ACTIVE' || item.status=== 'PENDING') { @if
-                (!statusLoading) {
-                <button class="dropdown-btn" (click)="changeStatus(item.id)">
-                  <img src="../../../assets/images/edit-icon.svg" alt="" /><span
-                    >change status</span
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (users) { @for (item of users.data.content | sortByCreatedAt |
+            FilterPipe:searchText ; track $index) {
+            <tr>
+              <td>{{ item.fullName }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.role }}</td>
+              <td>{{ item.status }}</td>
+              <td class="actions-container">
+                <div class="actions">
+                  <img src="../../../assets/images/ellipsis.svg" alt="" />
+                </div>
+                <div class="dropdown">
+                  <h3>Actions</h3>
+                  @if (item.status === 'ACTIVE' || item.status=== 'PENDING') {
+                  @if (!statusLoading) {
+                  <button class="dropdown-btn" (click)="changeStatus(item.id)">
+                    <img
+                      src="../../../assets/images/edit-icon.svg"
+                      alt=""
+                    /><span>change status</span>
+                  </button>
+                  }@else {
+                  <button class="dropdown-btn">
+                    <app-spinner></app-spinner>
+                  </button>
+                  } }@else if (item.status === 'INACTIVE' ||
+                  item.status==='PENDING'){ @if (!statusLoading) {
+                  <button
+                    class="dropdown-btn"
+                    (click)="activateStatus(item.id)"
                   >
-                </button>
-                }@else {
-                <button class="dropdown-btn">
-                  <app-spinner></app-spinner>
-                </button>
-                } }@else if (item.status === 'INACTIVE' ||
-                item.status==='PENDING'){ @if (!statusLoading) {
-                <button class="dropdown-btn" (click)="activateStatus(item.id)">
-                  <img src="../../../assets/images/edit-icon.svg" alt="" /><span
-                    >change status</span
-                  >
-                </button>
-                }@else {
-                <button class="dropdown-btn"><app-spinner></app-spinner></button>
-                } }
-              </div>
-            </td>
-          </tr>
-          } }
-        </tbody>
-      </table>
-            </div>
+                    <img
+                      src="../../../assets/images/edit-icon.svg"
+                      alt=""
+                    /><span>change status</span>
+                  </button>
+                  }@else {
+                  <button class="dropdown-btn">
+                    <app-spinner></app-spinner>
+                  </button>
+                  } }
+                </div>
+              </td>
+            </tr>
+            } }
+          </tbody>
+        </table>
+      </div>
       <app-pagination
         [currentPage]="page"
         [totalPages]="users.data.totalPages"

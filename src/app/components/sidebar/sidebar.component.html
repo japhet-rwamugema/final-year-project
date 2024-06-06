@@ -1,27 +1,49 @@
-  <aside [ngClass]="{'open': isSidebarOpen}">
-      <div class="link">
-        <a routerLink="/dashboard/admin" routerLinkActive="active-class"
-        [routerLinkActiveOptions]="{ exact: true }"
-          >Home</a
-        >
-        <a routerLink="/dashboard/admin/users" routerLinkActive="active-class"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Users</a>
-        <a routerLink="/dashboard/admin/roles" routerLinkActive="active-class"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Roles</a>
-      </div>
-      <div class="profile">
-        <div class="avatar">
-          <img src="../../../assets/images/avatar.svg" alt="" />
-          <span>Admin</span>
-        </div>
-        @if (isLogout) {
-        <app-spinner></app-spinner>
-        }@else {
-        <button (click)="logout()">
-          Logout <img src="../../../assets/images/logout.svg" alt="" />
-        </button>
-        }
-      </div>
-    </aside>
+<aside [ngClass]="{ open: isSidebarOpen }">
+  <div class="link">
+    @switch (role) { @case ('ADMIN') {
+    <a
+      routerLink="/dashboard/admin"
+      routerLinkActive="active-class"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Home</a
+    >
+    <a
+      routerLink="/dashboard/admin/users"
+      routerLinkActive="active-class"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Users</a
+    >
+    <a
+      routerLink="/dashboard/admin/roles"
+      routerLinkActive="active-class"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Roles</a
+    >
+    } @case ('FRONT_DESK') {
+    <a
+      routerLink="/dashboard/frontdesk"
+      routerLinkActive="active-class"
+      >Home</a
+    >
+    } @case ('TECHNICIAN') {
+    <a
+      routerLink="/dashboard/technician"
+      routerLinkActive="active-class"
+      >Home</a>
+    } @case ('RADIOLOGIST') {} @case ('FINANCE') {}
+    @case ('QUALITY_ASSURANCE') {} }
+  </div>
+  <div class="profile">
+    <div class="avatar">
+      <img src="../../../assets/images/avatar.svg" alt="" />
+      <span>{{ role }}</span>
+    </div>
+    @if (isLogout) {
+    <app-spinner></app-spinner>
+    }@else {
+    <button (click)="logout()">
+      Logout <img src="../../../assets/images/logout.svg" alt="" />
+    </button>
+    }
+  </div>
+</aside>

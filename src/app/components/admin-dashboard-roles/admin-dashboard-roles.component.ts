@@ -13,6 +13,7 @@ import {
 import { CoreModule } from '../../modules';
 import { FilterPipe } from '../../pipes/trim.pipe';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-admin-dashboard-roles',
@@ -24,7 +25,8 @@ import { PaginationComponent } from '../pagination/pagination.component';
     CoreModule,
     FilterPipe,
     FormsModule,
-    PaginationComponent
+    PaginationComponent,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './admin-dashboard-roles.component.html',
@@ -85,5 +87,14 @@ export class AdminDashboardRolesComponent {
         this.logoutLoading = false;
         this.router.navigate(['/']);
       });
+  }
+
+  isSidebarOpen = false;
+  viewSidebar(isOpen: boolean) {
+    this.isSidebarOpen = isOpen;
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

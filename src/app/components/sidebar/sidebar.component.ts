@@ -50,4 +50,17 @@ export class SidebarComponent {
     });
   }
 
+  role!: string;
+  ngOnInit() {
+    this.getCurrentUser();
+  }
+  getCurrentUser() { 
+    this.authService.getCurrentUser().subscribe((data) => { 
+      if (data) {
+        this.role = data.data.role;
+        
+      }
+    });
+  }
+
 }

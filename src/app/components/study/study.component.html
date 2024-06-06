@@ -1,21 +1,17 @@
 <div class="main-content">
   <nav>
     <img src="../../../assets/images/radiology-logo.jpg" alt="" />
+    <img
+      src="../../../assets/images/hamburger.svg"
+      alt=""
+      (click)="open()"
+      class="hamburger" />
   </nav>
   <div class="main-div">
-    <aside>
-      <div class="avatar">
-        <img src="../../../assets/images/avatar.svg" alt="" />
-        <span>{{ role }}</span>
-      </div>
-      @if (!logoutLoading) {
-      <button (click)="logout()">
-        Logout <img src="../../../assets/images/logout.svg" alt="" />
-      </button>
-      }@else {
-      <button><app-spinner></app-spinner></button>
-      }
-    </aside>
+<app-sidebar
+[isSidebarOpen]="isOpen"
+(sidebarToggled)="openSidebar($event)"
+></app-sidebar>
     <div class="studies-container">
       <h1>Patient studies</h1>
       @switch (viewMode) { @case ('hide') {

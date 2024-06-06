@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImageTpesList, InsuranceList, UserWithRole } from '../../interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { FrontDeskComponent } from '../front-desk/front-desk.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-create-appointment',
@@ -25,6 +26,7 @@ import { FrontDeskComponent } from '../front-desk/front-desk.component';
     CommonModule,
     CoreModule,
     HttpClientModule,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './create-appointment.component.html',
@@ -122,4 +124,6 @@ export class CreateAppointmentComponent extends FrontDeskComponent {
         });
     }
   }
+
+
 }

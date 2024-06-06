@@ -1,51 +1,26 @@
 <div class="main-content">
   <nav>
     <img src="../../../assets/images/radiology-logo.jpg" alt="" />
+    <img
+      src="../../../assets/images/hamburger.svg"
+      alt=""
+      (click)="toggleSidebar()"
+      class="hamburger"
+    />
   </nav>
   <div class="main-div">
-    <aside>
-      <div class="link">
-        <a
-          routerLink="/dashboard/admin"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Home</a
-        >
-        <a
-          routerLink="/dashboard/admin/users"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Users</a
-        >
-        <a
-          routerLink="/dashboard/admin/roles"
-          routerLinkActive="active-class"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Roles</a
-        >
-      </div>
-      <div class="profile">
-        <div class="avatar">
-          <img src="../../../assets/images/avatar.svg" alt="" />
-          <span>Admin</span>
-        </div>
-        @if (logoutLoading) {
-        <button><app-spinner></app-spinner></button>
-        }@else {
-        <button (click)="logout()">
-          Logout <img src="../../../assets/images/logout.svg" alt="" />
-        </button>
-        }
-      </div>
-    </aside>
+    <app-sidebar
+      [isSidebarOpen]="isSidebarOpen"
+      (sidebarToggled)="viewSidebar($event)"
+      r
+    ></app-sidebar>
     <div class="container">
       <div class="search-container">
         <h1>
-          Roles & Permissions
-          @if (tableData) {
-            <span>{{ tableData.data.content.length }}</span>
+          Roles & Permissions @if (tableData) {
+          <span>{{ tableData.data.content.length }}</span>
           }@else {
-            <span>0</span>
+          <span>0</span>
           }
         </h1>
         @if (isLoading) {
@@ -68,31 +43,33 @@
         </div>
       </div>
       @if (tableData.data && tableData.data.content.length > 0) {
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Role</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (item of tableData.data.content | FilterPipe: seartchText; track
-          $index) {
-          <tr>
-            <td>{{ item.fullName }}</td>
-            <td>
-              {{ item.email }}
-            </td>
-            <td>{{ item.phoneNumber }}</td>
-            <td>{{ item.role }}</td>
-            <td>{{ item.status }}</td>
-          </tr>
-          }
-        </tbody>
-      </table>
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone number</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of tableData.data.content | FilterPipe: seartchText;
+            track $index) {
+            <tr>
+              <td>{{ item.fullName }}</td>
+              <td>
+                {{ item.email }}
+              </td>
+              <td>{{ item.phoneNumber }}</td>
+              <td>{{ item.role }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
       <app-pagination
         [totalPages]="tableData.data.totalPages"
         [currentPage]="page"

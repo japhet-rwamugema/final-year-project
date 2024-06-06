@@ -10,6 +10,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ToastrService } from 'ngx-toastr';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-technician-dashboard',
@@ -23,7 +24,8 @@ import { ToastrService } from 'ngx-toastr';
     HttpClientModule,
     TrimPipe,
     FilterPipe,
-    PaginationComponent
+    PaginationComponent,
+    SidebarComponent
   ],
   providers: [AuthService, DatePipe],
   templateUrl: './technician-dashboard.component.html',
@@ -34,7 +36,8 @@ export class TechnicianDashboardComponent {
     private authService: AuthService,
     private router: Router,
     private dataPipe: DatePipe,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+
   ) {
     this.dataControl = new FormControl('');
   }
@@ -127,5 +130,14 @@ export class TechnicianDashboardComponent {
   }
   report(id: string) {
     this.router.navigateByUrl(`/study/${id}`, { state: this.patientData });
+  }
+
+  isOpen = false;
+  openSidebar(isOpen: boolean) {
+    this.isOpen = isOpen;
+  }
+
+  toggleSidebar(): void { 
+    this.isOpen = !this.isOpen;
   }
 }

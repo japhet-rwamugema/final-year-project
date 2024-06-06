@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px auto;
   width: 600px;
   height: 53px;
   border-radius: 8px;
@@ -34,8 +34,5 @@ span{
 @media (max-width: 768px) {
   .pagination {
     width: 300px;
-    position: fixed;
-    bottom: 20px;
-    left: 2.5rem;
   }
 }

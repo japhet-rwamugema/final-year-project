@@ -8,7 +8,8 @@ nav {
   height: 80px;
   display: flex;
   align-items: center;
-  background-color: #4E5B09;
+  justify-content: space-between;
+  background-color: #4e5b09;
   position: fixed;
   top: 0;
   z-index: 10;
@@ -300,11 +301,57 @@ span {
   cursor: pointer;
 }
 
-.search-actions select,select:focus{
+.search-actions select,
+select:focus {
   width: 170px;
   height: 40px;
   padding: 0px 10px;
-    border: 1px solid #c1c1c1;
-    border-radius: 4px;
-    outline: none;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  outline: none;
+}
+
+.hambuger {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .hambuger {
+    display: block;
+  }
+  .container {
+    width: 100%;
+    left: 0;
+    top: 81px;
+    height: 100%;
+  }
+  .search-container{
+    width: 100%;
+    height: 80px;
+    flex-direction: column;
+  }
+  .search-actions {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+   .table {
+    overflow-x: auto;
+    max-height: 360px;
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (min-width: 780px) and (max-width: 1024px) {
+  .hambuger {
+    display: block;
+  }
+  .container {
+    width: 100%;
+    left: 0;
+    padding: 0 20px;
+  }
+
+  .table {
+    width: 100%;
+  }
 }

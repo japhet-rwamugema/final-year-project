@@ -1,255 +1,242 @@
 <div class="main-content">
   <nav>
     <img src="../../../assets/images/radiology-logo.jpg" alt="" />
+    <img
+      src="../../../assets/images/hamburger.svg"
+      alt=""
+      (click)="toggleSidebar()"
+      class="hamburger"
+    />
   </nav>
   <div class="main-div">
-    <aside>
-      <div class="avatar">
-        <img src="../../../assets/images/avatar.svg" alt="" />
-        <span>{{role}}</span>
-      </div>
-      @if (isLoading) {
-      <button>
-        <app-spinner></app-spinner>
-      </button>
-        }@else {
-          <button (click)="logout()">
-            Logout <img src="../../../assets/images/logout.svg" alt="" />
-          </button>
-        }
-    </aside>
+    <app-sidebar
+      [isSidebarOpen]="isOpen"
+      (sidebarToggled)="openSidebar($event)"
+    ></app-sidebar>
     <div class="registration">
-        <h1>Patient Registration and Scheduling</h1>
-        @if (data) {
-        <div class="container">
-      <form [formGroup]="patientForm">
-        <div class="input-group">
-          <label for="input1">firstname:</label>
-          <input
-            type="text"
-            id="input1"
-            class="input-field"
-            placeholder="John"
-            formControlName="firstName"
-          />
-        </div>
-        <div class="input-group">
-          <label for="input1">Lastname:</label>
-          <input
-            type="text"
-            id="input1"
-            class="input-field"
-            placeholder="Smith"
-            formControlName="lastName"
-          />
-        </div>
-        <div class="input-group">
-          <label for="input2">Date of Birth</label>
-          <input
-            type="date"
-            id="input2"
-            class="input-field"
-            placeholder="1/1/2021"
-            formControlName="dateOfBirth"
-          />
-        </div>
-        <div class="input-group">
-          <label>phoneNumber</label>
-          <input
-            type="text"
-            id="input3"
-            class="input-field"
-            placeholder="11111111"
-            formControlName="phoneNumber"
-          />
-        </div>
-        <div class="input-group">
-          <label>Address</label>
-          <input
-            type="text"
-            id="input3"
-            class="input-field"
-            placeholder="kigali"
-            formControlName="address"
-          />
-        </div>
-        <div class="input-group">
-          <label>Radiologist </label>
-          <select formControlName="radiologistId">
-            <option value="" disabled>Radiologist</option>
-              @for (item of users.data; track $index) {
-                @if (item.role === 'RADIOLOGIST') {
-                  <option [value]="item.id">{{item.fullName}}</option>
-                }
-            }
+      <h1>Patient Registration and Scheduling</h1>
+      @if (data) {
+      <div class="container">
+        <form [formGroup]="patientForm">
+          <div class="input-group">
+            <label for="input1">firstname:</label>
+            <input
+              type="text"
+              id="input1"
+              class="input-field"
+              placeholder="John"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="input-group">
+            <label for="input1">Lastname:</label>
+            <input
+              type="text"
+              id="input1"
+              class="input-field"
+              placeholder="Smith"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="input-group">
+            <label for="input2">Date of Birth</label>
+            <input
+              type="date"
+              id="input2"
+              class="input-field"
+              placeholder="1/1/2021"
+              formControlName="dateOfBirth"
+            />
+          </div>
+          <div class="input-group">
+            <label>phoneNumber</label>
+            <input
+              type="text"
+              id="input3"
+              class="input-field"
+              placeholder="11111111"
+              formControlName="phoneNumber"
+            />
+          </div>
+          <div class="input-group">
+            <label>Address</label>
+            <input
+              type="text"
+              id="input3"
+              class="input-field"
+              placeholder="kigali"
+              formControlName="address"
+            />
+          </div>
+          <div class="input-group">
+            <label>Radiologist </label>
+            <select formControlName="radiologistId">
+              <option value="" disabled>Radiologist</option>
+              @for (item of users.data; track $index) { @if (item.role ===
+              'RADIOLOGIST') {
+              <option [value]="item.id">{{ item.fullName }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Technician: </label>
-          <select formControlName="technicianId">
-            <option value="" disabled>Technician</option>
-              @for (item of users.data; track $index) {
-                @if (item.role === 'TECHNICIAN') {
-                  <option [value]="item.id">{{item.fullName}}</option>
-                }
-            }
+          <div class="input-group">
+            <label>Technician: </label>
+            <select formControlName="technicianId">
+              <option value="" disabled>Technician</option>
+              @for (item of users.data; track $index) { @if (item.role ===
+              'TECHNICIAN') {
+              <option [value]="item.id">{{ item.fullName }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Imaging Modality: </label>
-          <select formControlName="imageTypeId">
-            <option value="" disabled>select Image</option>
-              @for (item of imageTypes; track $index) {
-                @for (image of item.data; track $index) {
-                  <option [value]="image.id">{{image.name}}</option>
-                }
-            }
+          <div class="input-group">
+            <label>Imaging Modality: </label>
+            <select formControlName="imageTypeId">
+              <option value="" disabled>select Image</option>
+              @for (item of imageTypes; track $index) { @for (image of
+              item.data; track $index) {
+              <option [value]="image.id">{{ image.name }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Insurance Company:</label>
-          <select formControlName="insuranceId">
-            <option value="" disabled>Insurance</option>
-            @for (item of insuranceTypes; track $index) {
-              @for (insurance of item.data; track $index) {
-                <option [value]="insurance.id">{{insurance.name}}</option>
-              }
-            }
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Appointment Date:</label>
-          <input
-            type="date"
-            id="input3"
-            class="input-field"
-            placeholder="Input 3"
-            formControlName="appointmentDate"
-            [min]="minDate"
-          />
-        </div>
-        <div class="btn">
-          <button (click)="onSave()">Save</button>
-        </div>
-      </form>
-      <hr />
-      <form [formGroup]="publisherForm">
-        <div class="input-group">
-          <label for="input1">firstname:</label>
-          <input
-            type="text"
-            id="input1"
-            class="input-field"
-            placeholder="John"
-            formControlName="firstName"
-          />
-        </div>
-        <div class="input-group">
-          <label for="input1">Lastname:</label>
-          <input
-            type="text"
-            id="input1"
-            class="input-field"
-            placeholder="Smith"
-            formControlName="lastName"
-          />
-        </div>
-        <div class="input-group">
-          <label for="input2">Date of Birth</label>
-          <input
-            type="date"
-            id="input2"
-            class="input-field"
-            placeholder="1/1/2021"
-            formControlName="dateOfBirth"
-          />
-        </div>
-        <div class="input-group">
-          <label>phoneNumber</label>
-          <input
-            type="text"
-            id="input3"
-            class="input-field"
-            placeholder="11111111"
-            formControlName="phoneNumber"
-          />
-        </div>
-        <div class="input-group">
-          <label>Address</label>
-          <input
-            type="text"
-            id="input3"
-            class="input-field"
-            placeholder="kigali"
-            formControlName="address"
-          />
-        </div>
-        <div class="input-group">
-          <label>Radiologist: </label>
-          <select formControlName="radiologistId">
-            <option value="" disabled>Radiologist</option>
-              @for (item of users.data; track $index) {
-                @if (item.role === 'RADIOLOGIST') {
-                  <option [value]="item.id">{{item.fullName}}</option>
-                }
-            }
+          <div class="input-group">
+            <label>Insurance Company:</label>
+            <select formControlName="insuranceId">
+              <option value="" disabled>Insurance</option>
+              @for (item of insuranceTypes; track $index) { @for (insurance of
+              item.data; track $index) {
+              <option [value]="insurance.id">{{ insurance.name }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Technician: </label>
-          <select formControlName="technicianId">
-            <option value="" disabled>Technician</option>
-              @for (item of users.data; track $index) {
-                @if (item.role === 'TECHNICIAN') {
-                  <option [value]="item.id">{{item.fullName}}</option>
-                }
-            }
+          <div class="input-group">
+            <label>Appointment Date:</label>
+            <input
+              type="date"
+              id="input3"
+              class="input-field"
+              placeholder="Input 3"
+              formControlName="appointmentDate"
+              [min]="minDate"
+            />
+          </div>
+          <div class="btn">
+            <button (click)="onSave()">Save</button>
+          </div>
+        </form>
+        <hr />
+        <form [formGroup]="publisherForm">
+          <div class="input-group">
+            <label for="input1">firstname:</label>
+            <input
+              type="text"
+              id="input1"
+              class="input-field"
+              placeholder="John"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="input-group">
+            <label for="input1">Lastname:</label>
+            <input
+              type="text"
+              id="input1"
+              class="input-field"
+              placeholder="Smith"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="input-group">
+            <label for="input2">Date of Birth</label>
+            <input
+              type="date"
+              id="input2"
+              class="input-field"
+              placeholder="1/1/2021"
+              formControlName="dateOfBirth"
+            />
+          </div>
+          <div class="input-group">
+            <label>phoneNumber</label>
+            <input
+              type="text"
+              id="input3"
+              class="input-field"
+              placeholder="11111111"
+              formControlName="phoneNumber"
+            />
+          </div>
+          <div class="input-group">
+            <label>Address</label>
+            <input
+              type="text"
+              id="input3"
+              class="input-field"
+              placeholder="kigali"
+              formControlName="address"
+            />
+          </div>
+          <div class="input-group">
+            <label>Radiologist: </label>
+            <select formControlName="radiologistId">
+              <option value="" disabled>Radiologist</option>
+              @for (item of users.data; track $index) { @if (item.role ===
+              'RADIOLOGIST') {
+              <option [value]="item.id">{{ item.fullName }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Imaging Modality: </label>
-          <select formControlName="imageTypeId">
-            <option value="" disabled>select Image</option>
-              @for (item of imageTypes; track $index) {
-                @for (image of item.data; track $index) {
-                  <option [value]="image.id">{{image.name}}</option>
-                }
-            }
+          <div class="input-group">
+            <label>Technician: </label>
+            <select formControlName="technicianId">
+              <option value="" disabled>Technician</option>
+              @for (item of users.data; track $index) { @if (item.role ===
+              'TECHNICIAN') {
+              <option [value]="item.id">{{ item.fullName }}</option>
+              } }
             </select>
           </div>
-        <div class="input-group">
-          <label>Insurance Company:</label>
-          <select formControlName="insuranceId">
-            <option value="" disabled>Insurance</option>
-            @for (item of insuranceTypes; track $index) {
-              @for (insurance of item.data; track $index) {
-                <option [value]="insurance.id">{{insurance.name}}</option>
-              }
-            }
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Appointment Date:</label>
-          <input
-            type="date"
-            id="input3"
-            class="input-field"
-            placeholder="Input 3"
-            formControlName="appointmentDate"
-          />
-        </div>
-        @if (isLoading) {
-            <div class="btn">
-                <button><app-spinner></app-spinner></button>
-            </div>
-        }@else {
-            <div class="btn">
-                <button (click)="submit()">Submit</button>
-            </div>
-        }
-      </form>
+          <div class="input-group">
+            <label>Imaging Modality: </label>
+            <select formControlName="imageTypeId">
+              <option value="" disabled>select Image</option>
+              @for (item of imageTypes; track $index) { @for (image of
+              item.data; track $index) {
+              <option [value]="image.id">{{ image.name }}</option>
+              } }
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Insurance Company:</label>
+            <select formControlName="insuranceId">
+              <option value="" disabled>Insurance</option>
+              @for (item of insuranceTypes; track $index) { @for (insurance of
+              item.data; track $index) {
+              <option [value]="insurance.id">{{ insurance.name }}</option>
+              } }
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Appointment Date:</label>
+            <input
+              type="date"
+              id="input3"
+              class="input-field"
+              placeholder="Input 3"
+              formControlName="appointmentDate"
+            />
+          </div>
+          @if (isLoading) {
+          <div class="btn">
+            <button><app-spinner></app-spinner></button>
+          </div>
+          }@else {
+          <div class="btn">
+            <button (click)="submit()">Submit</button>
+          </div>
+          }
+        </form>
+      </div>
+      }
     </div>
-    }
-</div>
   </div>
 </div>

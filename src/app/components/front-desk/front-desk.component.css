@@ -1,16 +1,17 @@
 .main-content {
   width: 100%;
   height: 100vh;
-  background-color: #4e5b09;
 }
 nav {
   width: 100%;
   height: 80px;
   display: flex;
   align-items: center;
-  position: fixed;
+  justify-content: space-between;
   background-color: #4e5b09;
-  z-index: 10;
+  top: 0;
+  position: fixed;
+  z-index: 1000;
 }
 nav img {
   margin-left: 20px;
@@ -21,55 +22,21 @@ nav img {
   align-items: center;
 }
 
-aside {
-  width: 200px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #fcf7ea;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-}
-
-aside .avatar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-bottom: 10px;
-}
-.avatar img {
-  width: 48px;
-  height: 38px;
-}
-.avatar span {
-  font-size: 13px;
-  text-transform: capitalize;
-}
-aside button {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100px;
-  height: 27px;
-  margin-bottom: 20px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: #000;
-}
 .registration {
-  margin: 6rem auto 0 auto;
+  position: fixed;
+  top: 87px;
+  left: 14rem;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: #fff;
+  padding-bottom: 5rem;
 }
 
 .registration h1 {
   font-size: 24px;
   font-weight: 500;
   text-align: center;
-  margin-bottom: 10px;
 }
 .container {
   width: 1000px;
@@ -160,7 +127,14 @@ option {
   background-color: rgb(244, 205, 205);
   text-transform: capitalize;
 }
+
+.hamburger{
+  display: none;
+}
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
   .main-div {
     flex-direction: column;
     align-items: flex-start;
@@ -228,6 +202,9 @@ option {
 }
 
 @media (max-width: 480px) {
+  .hamburger {
+    display: block;
+  }
   .hero-header {
     font-size: 28px;
   }
@@ -244,15 +221,31 @@ option {
   .container button {
     padding: 12px;
   }
-}
 
-@media (max-width: 1024px) {
-  .registration h1 {
-    margin: 0 auto 10px 15rem;
+  .registration {
+    left: 0;
   }
   .container {
-    margin: 0 auto 0 14rem;
-    width: 790px;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@media (min-width:780px) and (max-width: 1024px) {
+  .hamburger {
+    display: block;
+  }
+  .registration {
+    width: 100%;
+    left: 0;
+  }
+  .registration h1 {
+    width: 100%;
+  }
+  .container {
+    margin: 0;
+    width: 100%;
   }
 
   .input-field,

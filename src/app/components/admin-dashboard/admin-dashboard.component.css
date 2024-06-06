@@ -18,7 +18,7 @@ nav img {
   margin-left: 20px;
   cursor: pointer;
 }
-.hamburger{
+.hamburger {
   display: none;
 }
 
@@ -29,7 +29,6 @@ nav img {
   justify-content: center;
   height: 100vh;
 }
-
 
 .container {
   width: 80%;
@@ -260,48 +259,72 @@ input:focus {
   cursor: pointer;
 }
 
-
 .open {
-display: none;
+  display: none;
 }
 @media (max-width: 500px) {
-.hamburger {
-  display: block;
+  .hamburger {
+    display: block;
+  }
+
+  .container {
+    left: 0;
+    top: 40px;
+    width: 100%;
+    height: 100vh;
+    padding: 0 0 50px 10px;
+  }
+
+  .search-container {
+    width: 100%;
+    height: 300px;
+  }
+  .card-container {
+    height: 300px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-container .card {
+    height: 110px;
+    width: 170px;
+    margin-left: 0;
+  }
+  .search-actions {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .card h4 {
+    font-size: 14px;
+  }
+
+  .table-grp {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
 }
 
-.container {
-  left: 0;
-  top: 40px;
-  width: 100%;
-  height: 100vh;
-  padding: 0 0 50px 10px;
-}
+@media (min-width: 780px) and (max-width: 1024px) {
+  .container {
+    left: 0;
+    top: 81px;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    padding: 0 20px 5rem 20px;
+  }
+  .hamburger {
+    display: block;
+  }
+  .card-container {
+    width: 100%;
+    height: 120px;
+  }
 
-.search-container {
-  width: 100%;
-  height: 300px;
-}
-.card-container {
-  height: 300px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-.card-container .card {
-  height: 110px;
-  width: 170px;
-  margin-left: 0;
-}
-.search-actions {
-  width: 100%;
-  justify-content: space-evenly;
-}
-.card h4 {
-  font-size: 14px;
-}
-
-.table-grp {
-  width: 100%;
-  margin: 10px 0 0 0 ;
-}
-
+  .card-container .card {
+    width: 200px;
+    height: 120px;
+  }
+  .table-grp {
+    width: 80%;
+  }
 }

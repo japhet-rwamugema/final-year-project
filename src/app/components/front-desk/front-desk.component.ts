@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
 import { CoreModule } from '../../modules';
 import { ToastrService } from 'ngx-toastr';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-front-desk',
@@ -24,6 +25,7 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     HttpClientModule,
     CoreModule,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './front-desk.component.html',
@@ -239,5 +241,13 @@ export class FrontDeskComponent {
           this.router.navigate(['/']);
         }
       });
+  }
+
+  isOpen = false;
+  openSidebar(isOpen: boolean) {
+    this.isOpen = isOpen;
+  }
+  toggleSidebar(): void { 
+    this.isOpen = !this.isOpen;
   }
 }

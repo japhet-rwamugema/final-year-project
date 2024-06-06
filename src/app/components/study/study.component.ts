@@ -14,6 +14,7 @@ import { catchError, of } from 'rxjs';
 import { CoreModule } from '../../modules';
 import { environment } from '../../../environments/env';
 import { ToastrService } from 'ngx-toastr';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-study',
@@ -26,6 +27,7 @@ import { ToastrService } from 'ngx-toastr';
     RouterModule,
     TrimPipe,
     CoreModule,
+    SidebarComponent
   ],
   providers: [AuthService],
   templateUrl: './study.component.html',
@@ -197,5 +199,13 @@ export class StudyComponent {
         this.logoutLoading = false;
         this.route.navigate(['/']);
       });
+  }
+
+  isOpen: boolean = false;
+  open() {
+    this.isOpen = !this.isOpen;
+  }
+  openSidebar(isOpen: boolean) { 
+    this.isOpen = isOpen;
   }
 }
