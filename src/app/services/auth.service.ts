@@ -225,7 +225,7 @@ export class AuthService {
     })
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file);    
     return this.http.post<UploadImageResponse>(`${environment.BACKEND_URL}/files/upload`, formData, { headers: header })
 
   }

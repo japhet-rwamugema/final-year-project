@@ -126,24 +126,9 @@ export class QualityAssuranceComponent {
     this.ischeckinLoading = true;
     this.router.navigateByUrl(`/study/${id}`, { state: this.patientData });
   }
-  markAsPaid(id: string) {
-    this.ischeckinLoading = false;
-    this.authService
-      .markAsPaid(id)
-      .pipe(
-        catchError((error) => {
-          this.toastr.error(error.error.message);
-          this.ischeckinLoading = false;
-          return of(null);
-        })
-      )
-      .subscribe((data) => {
-        if (data) {
-          this.toastr.success('Marked as paid successfully');
-          this.ischeckinLoading = false;
-          this.fetchData();
-        }
-      });
+
+  Pay(id: string) { 
+    this.router.navigateByUrl(`/payment/${id}`, { state: this.patientData });
   }
   report(id: string) {
     this.router.navigateByUrl(`/study/${id}`, { state: this.patientData });

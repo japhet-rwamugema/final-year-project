@@ -137,6 +137,8 @@ export class StudyComponent {
 
   makeReport() {
     if (this.commentControl.valid) {
+      console.log(this.file);
+      
       this.isLoading = true;
       this.authService
         .makeReport(this.file, this.commentControl.value, this.appointmentId)

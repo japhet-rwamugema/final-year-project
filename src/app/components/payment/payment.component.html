@@ -1,0 +1,46 @@
+<div class="payment-form-container">
+  <h2>Payment Form</h2>
+  <form class="checkout-form" [formGroup]="stripeTest">
+    <div
+      class="stripe-card"
+      ngxStripeCardGroup
+      [elementsOptions]="elementsOptions"
+    >
+      <h4>Enter payment details</h4>
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input id="amount" formControlName="amount" />
+      </div>
+      <div class="stripe-element">
+        <ngx-stripe-card-number
+          [options]="cardOptions"
+          [options]="cardOptions"
+        ></ngx-stripe-card-number>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="10px">
+        <div class="w-full stripe-element">
+          <ngx-stripe-card-expiry
+            [options]="cardOptions"
+          ></ngx-stripe-card-expiry>
+        </div>
+        <div class="w-full stripe-element">
+          <ngx-stripe-card-cvc
+            containerClass="stripe-element"
+            [options]="cardOptions"
+          ></ngx-stripe-card-cvc>
+        </div>
+      </div>
+    </div>
+
+    @if (ischeckinLoading) {
+    <button>
+      <app-spinner></app-spinner>
+    </button>
+    }@else {
+    <button type="submit" (click)="pay()">Pay {{
+    stripeTest.get('amount')?.value  
+    }}</button>
+    }
+  </form>
+</div>

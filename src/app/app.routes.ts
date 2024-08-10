@@ -12,6 +12,7 @@ import { FrontDeskDashboardComponent } from './components/front-desk-dashboard/f
 import { StudyComponent } from './components/study/study.component';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 import { AuthGuard } from './guard.guard';
+import { PaymentComponent } from './components/payment/payment.component';
 
 export const routes: Routes = [{
     path: '', component: LoginComponent
@@ -55,6 +56,9 @@ export const routes: Routes = [{
 {
     path: "quality", component: QualityAssuranceComponent,
     canActivate: [AuthGuard]
-},
+    },
+    {
+    path:'payment/:id', component: PaymentComponent,
+}
 
 ];
